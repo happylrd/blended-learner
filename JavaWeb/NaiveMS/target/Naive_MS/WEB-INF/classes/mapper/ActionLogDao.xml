@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.happylrd.dao.ActionLogDao">
+
+    <insert id="add" parameterType="UserActionLog">
+        INSERT INTO
+        `user_action_log`
+        (`username`,`method`,`description`,`request_body`,`ip_addr_v4`,`ip_addr_v6`,`time`,`session_id`,`os_name`,`os_version`,`browser_name`,`browser_version`)
+        VALUES
+        (#{username},#{method},#{description},#{requestBody},#{ipAddrV4},#{ipAddrV6},#{time},#{sessionId},#{osName},#{osVersion},#{browserName},#{browserVersion})
+    </insert>
+
+    <select id="findAll" resultType="UserActionLog">
+        SELECT
+        *
+        FROM
+        `user_action_log`
+        ORDER BY
+        `id`
+        DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="getAllCount" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        `user_action_log`;
+    </select>
+</mapper>
