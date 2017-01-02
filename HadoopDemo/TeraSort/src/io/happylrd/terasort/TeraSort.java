@@ -12,6 +12,7 @@ import org.apache.hadoop.util.GenericOptionsParser;
 
 public class TeraSort {
     private static final int REDUCE_TASK_NUM = 4;
+    private static final int SAMPLE_NUMBER = 100;
 
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
@@ -46,7 +47,7 @@ public class TeraSort {
 
         job.setNumReduceTasks(REDUCE_TASK_NUM);
 
-        TeraSortSampler.doSample(job, 100);
+        TeraSortSampler.doSample(job, SAMPLE_NUMBER);
 
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }

@@ -20,10 +20,6 @@ public class TeraSortPartition
 
         // just for print
         System.out.println("Key:" + key);
-        for (int splitPoint : splitPoints) {
-            System.out.print(splitPoint + " ");
-        }
-        System.out.println();
 
         int index = splitPoints.length;
         for (int i = 0; i < splitPoints.length; i++) {

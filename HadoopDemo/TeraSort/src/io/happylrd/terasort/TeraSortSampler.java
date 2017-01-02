@@ -25,18 +25,14 @@ public class TeraSortSampler {
     public static void doSample(Job job, int sampleNum) throws Exception {
 
         InputFormat inputFormat = new TextInputFormat();
-
         List<InputSplit> inputSplitList = inputFormat.getSplits(job);
-        List<Integer> sampleList = new ArrayList<>();
-        FileSystem fs = FileSystem
-                .get(job.getConfiguration());
 
+        int splitSize = inputSplitList.size();
         int samplePerPartition =
-                sampleNum / inputSplitList.size();
+                sampleNum / splitSize;
 
+        List<Integer> sampleList = new ArrayList<>();
         for (InputSplit split : inputSplitList) {
-            int snum = 0;
-
             TaskAttemptContext context = new TaskAttemptContextImpl(
                     job.getConfiguration(), new TaskAttemptID()
             );
@@ -44,34 +40,45 @@ public class TeraSortSampler {
                     inputFormat.createRecordReader(split, context);
             Text text;
             reader.initialize(split, context);
+
+            int count = 1;
             while (reader.nextKeyValue()) {
+                if (count > samplePerPartition) {
+                    break;
+                }
                 text = reader.getCurrentValue();
                 sampleList.add(
                         Integer.parseInt(text.toString())
                 );
-                if (snum++ > samplePerPartition) {
-                    break;
-                }
+                count++;
             }
             reader.close();
         }
 
+        // just for print
+        System.out.println("SampleNumber: " + sampleNum);
+        System.out.println("SampleList elements: ");
+        for (Integer sample : sampleList) {
+            System.out.print(sample + " ");
+        }
+        System.out.println();
+
         Collections.sort(sampleList);
 
         // to write in local fs /tmp/SplitSample
+        FileSystem fs = FileSystem
+                .get(job.getConfiguration());
         DataOutputStream writer = fs
                 .create(SPLIT_SAMPLE_PATH, true);
 
         int stepLength =
                 sampleList.size() / job.getNumReduceTasks();
         int n = 0;
-
         for (int i = stepLength; i < sampleList.size(); i += stepLength) {
             n++;
             if (n >= job.getNumReduceTasks()) {
                 break;
             }
-
             new Text(sampleList.get(i) + "\r\n")
                     .write(writer);
         }
@@ -82,10 +89,10 @@ public class TeraSortSampler {
         job.addCacheFile(new URI(SPLIT_SAMPLE_PATH.toString()));
     }
 
-    public static int[] getSplitPoints(Configuration conf, int splitNum) {
+    public static int[] getSplitPoints(Configuration conf, int reduceNum) {
         FileSystem fs;
         DataInputStream reader = null;
-        int[] points = new int[splitNum - 1];
+        int[] points = new int[reduceNum - 1];
 
         try {
             fs = FileSystem.get(conf);
