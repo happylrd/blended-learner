@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.util.Scanner;
 
 public class TopKImpl {
-    private static final String TOP_FILE_PATH = "./finaloutput/all-result.txt";
+    private static final String TOP_FILE_PATH = "./data/mergeResult/all-result.txt";
     private static final int K_VALUE = 10;
 
     public static void main(String[] args) {

@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 public class DataGenerator {
-    private static final String DATA_FILE_PATH = "./input/data.txt";
+    private static final String DATA_FILE_PATH = "./data/input/data.txt";
     private static final int RANDOM_UPPER_BOUND = 100000;
 
     private void generate(String filePath, int numberUpperBound) {

@@ -18,7 +18,7 @@ import java.util.List;
 
 public class TeraSortSampler {
     private static final String SPLIT_SAMPLE_PATH_STR
-            = "/home/happylrd/MyCode/HadoopProjects/TeraSort/sample/SplitSample";
+            = "/home/happylrd/MyCode/HadoopProjects/TeraSort/data/sample/SplitSample";
     private static final Path SPLIT_SAMPLE_PATH =
             new Path(SPLIT_SAMPLE_PATH_STR);
 
