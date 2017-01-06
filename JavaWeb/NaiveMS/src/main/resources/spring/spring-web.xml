@@ -40,7 +40,6 @@
     </bean>
 
     <context:component-scan base-package="io.happylrd.mvc">
-        <!--only scan the java class with the annotation Controller-->
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 </beans>

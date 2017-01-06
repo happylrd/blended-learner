@@ -106,17 +106,21 @@
         </tbody>
     </table>
 
-    <ul class="pagination">
-        <li class="waves-effect">
-            <a onclick="goToLastPage()"><i class="material-icons">chevron_left</i></a>
-        </li>
-        <li class="active">
-            <a id="log-controller-now">1</a>
-        </li>
-        <li class="waves-effect">
-            <a onclick="goToNextPage()"><i class="material-icons">chevron_right</i></a>
-        </li>
-    </ul>
+    <div class="row">
+        <div class="center">
+            <ul class="pagination">
+                <li class="waves-effect">
+                    <a onclick="goToLastPage()"><i class="material-icons">chevron_left</i></a>
+                </li>
+                <li class="active">
+                    <a id="log-controller-now">1</a>
+                </li>
+                <li class="waves-effect">
+                    <a onclick="goToNextPage()"><i class="material-icons">chevron_right</i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <!--Import jQuery before materialize.js-->

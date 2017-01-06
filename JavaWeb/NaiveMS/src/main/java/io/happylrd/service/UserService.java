@@ -9,7 +9,9 @@ public interface UserService extends BaseService<User> {
 
     List<User> findAll(int pageNum, int pageSize);
 
-    User findUser(User user) throws Exception;
+    User findUser(User user);
+
+    User findUserByUsername(String username);
 
     void updateLoginSession(String sessionId, String username);
 }

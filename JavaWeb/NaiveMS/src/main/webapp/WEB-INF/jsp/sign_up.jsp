@@ -145,7 +145,7 @@
     </script>
 </head>
 
-<body background="${pageContext.request.contextPath}/static/images/sign_up.jpg">
+<body background="${pageContext.request.contextPath}/static/images/bg_sign_up.jpg">
 <nav>
     <div class="nav-wrapper cyan">
         <a href="#" class="brand-logo"><i class="material-icons">cloud</i>NaiveMS</a>

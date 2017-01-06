@@ -11,6 +11,8 @@
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/static/css/materialize.min.css"
           media="screen,projection"/>
 
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css">
+
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
@@ -78,7 +80,7 @@
 </nav>
 
 <div class="container">
-    <div class="row">
+    <div class="row mock-vertical-center">
         <div class="col s6 offset-s3">
             <div class="card-panel white">
                 <div class="row">
