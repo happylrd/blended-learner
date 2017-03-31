@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import StudentActivity
+
+
+class StudentActivityAdmin(admin.ModelAdmin):
+    list_display = ('student', 'activity', 'add_time',)
+
+
+admin.site.register(StudentActivity, StudentActivityAdmin)
