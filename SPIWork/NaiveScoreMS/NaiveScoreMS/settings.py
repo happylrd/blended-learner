@@ -17,11 +17,12 @@ import sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '^!_1u8^a1tkp=!ncvb&xk7u)vo*0e_9xtrf!14ca$pfk6r^g@@'
+SECRET_KEY = '#6c0ylepu5-oh%yhg_o8iee*e(r+*81k+c#97mj!mi0d*(cwj2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,7 +45,7 @@ INSTALLED_APPS = [
     'activities',
     'operation',
 ]
-AUTH_USER_MODEL = 'users.StudentProfile'
+AUTH_USER_MODEL = 'users.Administrator'
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,10 +1,20 @@
 from django.contrib import admin
 
-from .models import StudentProfile
+from .models import Student, Teacher, Administrator
 
 
-class StudentProfileAdmin(admin.ModelAdmin):
-    list_display = ('username', 'realname', 'mobile', 'school', 'major',)
+class StudentAdmin(admin.ModelAdmin):
+    list_display = ('username', 'realname', 'school', 'major',)
 
 
-admin.site.register(StudentProfile, StudentProfileAdmin)
+class TeacherAdmin(admin.ModelAdmin):
+    list_display = ('username', 'realname', 'school', 'gender',)
+
+
+class AdministratorAdmin(admin.ModelAdmin):
+    list_display = ('username', 'realname', 'gender', 'birthday',)
+
+
+admin.site.register(Student, StudentAdmin)
+admin.site.register(Teacher, TeacherAdmin)
+admin.site.register(Administrator, AdministratorAdmin)
