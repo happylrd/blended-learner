@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'users',
     'activities',
     'operation',
+    'rest_framework',
 ]
 AUTH_USER_MODEL = 'users.Administrator'
 
