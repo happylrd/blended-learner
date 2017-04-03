@@ -18,6 +18,7 @@ from django.contrib import admin
 
 from users.views import StudentListView, StudentDetailView, AdministratorListView
 from activities.views import ActivityListView, ActivityDetailView
+from operation.views import StudentActivityListView, StudentActivityDetailView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -31,4 +32,7 @@ urlpatterns = [
 
     url(r'^activities/$', ActivityListView.as_view(), name='activity-list'),
     url(r'^activities/(?P<pk>[0-9]+)/$', ActivityDetailView.as_view(), name='activity-detail'),
+
+    url(r'^studentactivities/$', StudentActivityListView.as_view(), name='student-activity-list'),
+    url(r'^studentactivities/(?P<pk>[0-9]+)/$', StudentActivityDetailView.as_view(), name='student-activity-detail'),
 ]

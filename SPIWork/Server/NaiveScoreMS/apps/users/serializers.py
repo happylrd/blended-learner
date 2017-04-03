@@ -7,7 +7,7 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = ('id', 'username', 'password', 'realname', 'mobile', 'school', 'major',
-                  'gender', 'birthday', 'add_time')
+                  'gender', 'birthday', 'permission_type', 'add_time')
 
 
 class AdministratorSerializer(serializers.ModelSerializer):

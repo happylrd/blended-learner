@@ -11,6 +11,7 @@ from activities.models import Activity
 class StudentActivity(models.Model):
     student = models.ForeignKey(Student, verbose_name='学生')
     activity = models.ForeignKey(Activity, verbose_name='活动')
+    has_joined = models.BooleanField(default=False, verbose_name='是否已参加')
     has_finished = models.BooleanField(default=False, verbose_name='是否已完成')
     add_time = models.DateTimeField(default=datetime.now, verbose_name='添加时间')
 
