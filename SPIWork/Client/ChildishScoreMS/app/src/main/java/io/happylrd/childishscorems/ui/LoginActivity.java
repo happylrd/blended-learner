@@ -84,16 +84,11 @@ public class LoginActivity extends AppCompatActivity {
                         Student student = gson.fromJson(jsonData, Student.class);
 
                         LogUtil.i(student.getUsername());
-                        LogUtil.i(student.getPassword());
 
-                        if (username.equals(student.getUsername())) {
-                            if (password.equals(student.getPassword())) {
-                                startActivity(MainActivity.newIntent(LoginActivity.this));
-                            } else {
-                                Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
-                            }
+                        if (password.equals(student.getPassword())) {
+                            startActivity(MainActivity.newIntent(LoginActivity.this));
                         } else {
-                            Toast.makeText(LoginActivity.this, "用户名错误", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -108,5 +103,9 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "输入框不能为空", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void checkForTeacher(final String username, final String password) {
+        //TODO: implement the teacher check logic later
     }
 }

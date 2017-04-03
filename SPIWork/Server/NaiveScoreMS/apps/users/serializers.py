@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Student, Administrator
+from .models import Student, Teacher, Administrator
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -8,6 +8,13 @@ class StudentSerializer(serializers.ModelSerializer):
         model = Student
         fields = ('id', 'username', 'password', 'realname', 'mobile', 'school', 'major',
                   'gender', 'birthday', 'permission_type', 'add_time')
+
+
+class TeacherSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Teacher
+        fields = ('id', 'username', 'password', 'realname', 'mobile', 'school',
+                  'gender', 'birthday', 'add_time')
 
 
 class AdministratorSerializer(serializers.ModelSerializer):
