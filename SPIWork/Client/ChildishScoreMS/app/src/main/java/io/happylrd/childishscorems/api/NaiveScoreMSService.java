@@ -13,5 +13,8 @@ public interface NaiveScoreMSService {
     Call<ResponseBody> findOneTeacher(@Path("username") String username);
 
     @GET("activities")
-    Call<ResponseBody> findActivities();
+    Call<ResponseBody> findActivityBeans();
+
+    @GET("activities/{id}")
+    Call<ResponseBody> findOneActivityBean(@Path("id") Integer id);
 }

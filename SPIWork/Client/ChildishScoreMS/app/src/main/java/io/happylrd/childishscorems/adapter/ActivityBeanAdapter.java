@@ -1,6 +1,7 @@
 package io.happylrd.childishscorems.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import io.happylrd.childishscorems.R;
 import io.happylrd.childishscorems.model.ActivityBean;
+import io.happylrd.childishscorems.ui.ActivityBeanActivity;
 
 public class ActivityBeanAdapter extends RecyclerView.Adapter<ActivityBeanAdapter.ViewHolder> {
 
@@ -36,13 +38,6 @@ public class ActivityBeanAdapter extends RecyclerView.Adapter<ActivityBeanAdapte
             mDescText = (TextView) itemView.findViewById(R.id.tv_desc);
             mStartTimeText = (TextView) itemView.findViewById(R.id.tv_start_time);
             mEndTimeText = (TextView) itemView.findViewById(R.id.tv_end_time);
-
-            mCardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //TODO: add jump to detail page later
-                }
-            });
         }
 
         public void bindActivityBean(ActivityBean activityBean) {
@@ -66,7 +61,19 @@ public class ActivityBeanAdapter extends RecyclerView.Adapter<ActivityBeanAdapte
 
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.item_activity_bean, parent, false);
-        return new ViewHolder(view);
+
+        final ViewHolder holder = new ViewHolder(view);
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                ActivityBean activityBean = mActivityBeanList.get(position);
+
+                mContext.startActivity(ActivityBeanActivity
+                        .newIntent(mContext, activityBean.getId()));
+            }
+        });
+        return holder;
     }
 
     @Override

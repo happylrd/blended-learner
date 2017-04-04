@@ -54,7 +54,7 @@ public class FinderFragment extends Fragment {
 
         NaiveScoreMSService service = retrofit.create(NaiveScoreMSService.class);
 
-        Call<ResponseBody> bodyCall = service.findActivities();
+        Call<ResponseBody> bodyCall = service.findActivityBeans();
         bodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
