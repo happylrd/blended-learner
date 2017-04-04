@@ -1,13 +1,15 @@
 package io.happylrd.childishscorems.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -28,6 +30,7 @@ public class ActivityBeanAdapter extends RecyclerView.Adapter<ActivityBeanAdapte
         private TextView mDescText;
         private TextView mStartTimeText;
         private TextView mEndTimeText;
+        private CheckBox mStateCheck;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -38,6 +41,7 @@ public class ActivityBeanAdapter extends RecyclerView.Adapter<ActivityBeanAdapte
             mDescText = (TextView) itemView.findViewById(R.id.tv_desc);
             mStartTimeText = (TextView) itemView.findViewById(R.id.tv_start_time);
             mEndTimeText = (TextView) itemView.findViewById(R.id.tv_end_time);
+            mStateCheck = (CheckBox) itemView.findViewById(R.id.cb_state);
         }
 
         public void bindActivityBean(ActivityBean activityBean) {
@@ -46,6 +50,8 @@ public class ActivityBeanAdapter extends RecyclerView.Adapter<ActivityBeanAdapte
             mDescText.setText(activityBean.getDesc());
             mStartTimeText.setText(activityBean.getStartTime());
             mEndTimeText.setText(activityBean.getEndTime());
+            //TODO: 0 for unchecked, will be optimized later
+            mStateCheck.setChecked(activityBean.getState() != 0);
         }
     }
 
@@ -73,6 +79,7 @@ public class ActivityBeanAdapter extends RecyclerView.Adapter<ActivityBeanAdapte
                         .newIntent(mContext, activityBean.getId()));
             }
         });
+
         return holder;
     }
 

@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * "name": "Flutter learning",
  * "score": "6.66",
  * "desc": "Build a high-quality app by using Flutter with Dart during one week.",
+ * "state": 0,
  * "start_time": "2017-04-03T12:00:00",
  * "end_time": "2017-04-10T12:00:00",
  * "add_time": "2017-04-03T19:37:00"
@@ -22,6 +23,7 @@ public class ActivityBean {
     private String name;
     private String score;
     private String desc;
+    private Integer state;
 
     @SerializedName("start_time")
     private String startTime;
@@ -58,6 +60,14 @@ public class ActivityBean {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 
     public String getStartTime() {

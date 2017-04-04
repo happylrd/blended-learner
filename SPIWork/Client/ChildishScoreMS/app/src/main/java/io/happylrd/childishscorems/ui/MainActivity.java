@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.happylrd.childishscorems.R;
-import io.happylrd.childishscorems.fragment.FinderFragment;
+import io.happylrd.childishscorems.fragment.ActivityBeanFindFragment;
 import io.happylrd.childishscorems.fragment.UserFragment;
 import io.happylrd.childishscorems.utils.LogUtil;
 
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTitleList.add("我的");
 
         mFragmentList = new ArrayList<>();
-        mFragmentList.add(new FinderFragment());
+        mFragmentList.add(new ActivityBeanFindFragment());
         mFragmentList.add(new UserFragment());
     }
 

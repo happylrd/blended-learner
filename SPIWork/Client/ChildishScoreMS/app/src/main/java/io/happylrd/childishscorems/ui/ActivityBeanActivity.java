@@ -7,8 +7,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -36,6 +39,7 @@ public class ActivityBeanActivity extends AppCompatActivity {
     private TextView mNameText;
     private TextView mScoreText;
     private TextView mDescText;
+    private CheckBox mStateCheck;
     private TextView mStartTimeText;
     private TextView mEndTimeText;
 
@@ -56,6 +60,7 @@ public class ActivityBeanActivity extends AppCompatActivity {
         Integer activityBeanId = intent.getIntExtra(ACTIVITY_BEAN_ID, 0);
 
         initView();
+        initListener();
         initData(activityBeanId);
     }
 
@@ -67,6 +72,7 @@ public class ActivityBeanActivity extends AppCompatActivity {
         mNameText = (TextView) findViewById(R.id.tv_name);
         mScoreText = (TextView) findViewById(R.id.tv_score);
         mDescText = (TextView) findViewById(R.id.tv_desc);
+        mStateCheck = (CheckBox) findViewById(R.id.cb_state);
         mStartTimeText = (TextView) findViewById(R.id.tv_start_time);
         mEndTimeText = (TextView) findViewById(R.id.tv_end_time);
 
@@ -75,6 +81,15 @@ public class ActivityBeanActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    private void initListener() {
+        mStateCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                LogUtil.i("isChecked:" + isChecked);
+            }
+        });
     }
 
     private void initData(Integer activityBeanId) {
@@ -103,6 +118,7 @@ public class ActivityBeanActivity extends AppCompatActivity {
                     mNameText.setText(activityBean.getName());
                     mScoreText.setText(activityBean.getScore());
                     mDescText.setText(activityBean.getDesc());
+                    mStateCheck.setChecked(activityBean.getState() != 0);
                     mStartTimeText.setText(activityBean.getStartTime());
                     mEndTimeText.setText(activityBean.getEndTime());
                 } catch (IOException e) {

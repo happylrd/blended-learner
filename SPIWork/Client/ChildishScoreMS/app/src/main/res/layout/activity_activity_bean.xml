@@ -84,6 +84,13 @@
                         android:textSize="16sp"
                         tools:text="三天出冰柱，一周齐天御。" />
 
+                    <CheckBox
+                        android:id="@+id/cb_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="审核通过"
+                        />
+
                     <TextView
                         android:id="@+id/tv_start_time"
                         android:layout_width="wrap_content"
@@ -103,6 +110,7 @@
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"

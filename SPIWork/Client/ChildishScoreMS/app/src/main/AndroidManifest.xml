@@ -19,7 +19,7 @@
         </activity>
         <activity android:name=".ui.AdministratorActivity" />
         <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.ActivityBeanActivity"></activity>
+        <activity android:name=".ui.ActivityBeanActivity" />
     </application>
 
 </manifest>

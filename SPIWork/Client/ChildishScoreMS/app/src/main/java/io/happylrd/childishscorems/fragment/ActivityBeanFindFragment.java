@@ -30,7 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class FinderFragment extends Fragment {
+public class ActivityBeanFindFragment extends Fragment {
 
     private ActivityBeanAdapter mAdapter;
 
@@ -40,7 +40,7 @@ public class FinderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_finder, null);
+        View view = inflater.inflate(R.layout.fragment_activity_bean_find, null);
 
         initView(view);
         initData();
