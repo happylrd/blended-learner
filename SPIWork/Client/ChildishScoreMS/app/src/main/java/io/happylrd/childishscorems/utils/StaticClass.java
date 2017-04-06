@@ -9,6 +9,8 @@ public class StaticClass {
     public static final String NAIVE_SCORE_MS_BASE_URL = "http://" + NAIVE_SCORE_MS_IP + ":" + NAIVE_SCORE_MS_PORT + "/";
     public static final String ADMIN_MS_URL = NAIVE_SCORE_MS_BASE_URL + "admin/";
 
+    public static final String SHARE_CURRENT_USER = "current_user";
+
     //TODO: will be encapsulated later, just for naive score ms api now.
     public static Retrofit getRetrofitInstance() {
         return new Retrofit.Builder()

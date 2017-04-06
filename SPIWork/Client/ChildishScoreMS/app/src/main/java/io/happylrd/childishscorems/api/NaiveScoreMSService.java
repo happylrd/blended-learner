@@ -1,8 +1,11 @@
 package io.happylrd.childishscorems.api;
 
+import io.happylrd.childishscorems.model.StudentActivityBean;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface NaiveScoreMSService {
@@ -17,4 +20,7 @@ public interface NaiveScoreMSService {
 
     @GET("activities/{id}")
     Call<ResponseBody> findOneActivityBean(@Path("id") Integer id);
+
+    @POST("studentactivities/")
+    Call<StudentActivityBean> createSABean(@Body StudentActivityBean studentActivityBean);
 }

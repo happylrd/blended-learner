@@ -17,6 +17,7 @@ import io.happylrd.childishscorems.R;
 import io.happylrd.childishscorems.api.NaiveScoreMSService;
 import io.happylrd.childishscorems.model.Student;
 import io.happylrd.childishscorems.utils.LogUtil;
+import io.happylrd.childishscorems.utils.ShareUtil;
 import io.happylrd.childishscorems.utils.StaticClass;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -86,6 +87,9 @@ public class LoginActivity extends AppCompatActivity {
                         LogUtil.i(student.getUsername());
 
                         if (password.equals(student.getPassword())) {
+                            ShareUtil.putStudent(LoginActivity.this,
+                                    StaticClass.SHARE_CURRENT_USER, student);
+
                             startActivity(MainActivity.newIntent(LoginActivity.this));
                         } else {
                             Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
