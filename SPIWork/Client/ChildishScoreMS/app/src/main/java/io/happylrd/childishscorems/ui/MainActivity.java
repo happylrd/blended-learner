@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List<String> mTitleList;
     private List<Fragment> mFragmentList;
 
-    private FloatingActionButton fab_setting;
+    private FloatingActionButton mAddFAB;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -57,11 +57,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initView() {
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
-        fab_setting = (FloatingActionButton) findViewById(R.id.fab_setting);
+        mAddFAB = (FloatingActionButton) findViewById(R.id.fab_add);
 
         mViewPager.setOffscreenPageLimit(mFragmentList.size());
 
-        fab_setting.setVisibility(View.GONE);
+        mAddFAB.setVisibility(View.GONE);
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mTabLayout.setupWithViewPager(mViewPager);
 
-        fab_setting.setOnClickListener(this);
+        mAddFAB.setOnClickListener(this);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -94,9 +94,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onPageSelected(int position) {
                 LogUtil.i("position:" + position);
                 if (position == 0) {
-                    fab_setting.setVisibility(View.GONE);
+                    mAddFAB.setVisibility(View.GONE);
                 } else {
-                    fab_setting.setVisibility(View.VISIBLE);
+                    mAddFAB.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.fab_setting:
+            case R.id.fab_add:
                 //TODO: do something
         }
     }
