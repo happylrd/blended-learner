@@ -2,30 +2,26 @@ package io.happylrd.childishscorems.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.happylrd.childishscorems.R;
+import io.happylrd.childishscorems.adapter.ViewPagerAdapter;
 import io.happylrd.childishscorems.fragment.ActivityBeanFindFragment;
 import io.happylrd.childishscorems.fragment.UserFragment;
 import io.happylrd.childishscorems.utils.LogUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TabLayout mTabLayout;
     private ViewPager mViewPager;
-
-    private List<String> mTitleList;
-    private List<Fragment> mFragmentList;
+    private BottomNavigationView mBottomNavigationView;
+    private MenuItem mPrevMenuItem;
 
     private FloatingActionButton mAddFAB;
 
@@ -39,48 +35,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initData();
         initView();
-    }
-
-    private void initData() {
-        mTitleList = new ArrayList<>();
-        //TODO: need to be replaced with the string resource file later
-        mTitleList.add("发现");
-        mTitleList.add("我的");
-
-        mFragmentList = new ArrayList<>();
-        mFragmentList.add(new ActivityBeanFindFragment());
-        mFragmentList.add(new UserFragment());
+        initListener();
     }
 
     private void initView() {
-        mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
+        mBottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
         mAddFAB = (FloatingActionButton) findViewById(R.id.fab_add);
-
-        mViewPager.setOffscreenPageLimit(mFragmentList.size());
 
         mAddFAB.setVisibility(View.GONE);
 
-        mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return mFragmentList.get(position);
-            }
+        setupWithViewPager(mViewPager);
+    }
 
+    private void initListener() {
+        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public int getCount() {
-                return mFragmentList.size();
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return mTitleList.get(position);
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.item_activity:
+                        mViewPager.setCurrentItem(0);
+                        break;
+                    case R.id.item_score:
+                        mViewPager.setCurrentItem(1);
+                        break;
+                    case R.id.item_find:
+                        mViewPager.setCurrentItem(2);
+                        break;
+                    case R.id.item_my:
+                        mViewPager.setCurrentItem(3);
+                        break;
+                }
+                return true;
             }
         });
-
-        mTabLayout.setupWithViewPager(mViewPager);
 
         mAddFAB.setOnClickListener(this);
 
@@ -92,7 +81,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onPageSelected(int position) {
+                if (mPrevMenuItem != null) {
+                    mPrevMenuItem.setChecked(false);
+                } else {
+                    mBottomNavigationView.getMenu().getItem(0).setChecked(false);
+                }
+
                 LogUtil.i("position:" + position);
+
+                mBottomNavigationView.getMenu().getItem(position).setChecked(true);
+                mPrevMenuItem = mBottomNavigationView.getMenu().getItem(position);
+
                 if (position == 0) {
                     mAddFAB.setVisibility(View.GONE);
                 } else {
@@ -105,6 +104,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
+    }
+
+    private void setupWithViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new ActivityBeanFindFragment());
+        adapter.addFragment(new UserFragment());
+        adapter.addFragment(new UserFragment());
+        adapter.addFragment(new UserFragment());
+        viewPager.setAdapter(adapter);
     }
 
     @Override

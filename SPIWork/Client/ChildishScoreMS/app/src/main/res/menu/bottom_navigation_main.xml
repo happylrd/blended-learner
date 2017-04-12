@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_activity"
+        android:icon="@drawable/ic_directions_run_black_24dp"
+        android:title="活动" />
+    <item
+        android:id="@+id/item_score"
+        android:icon="@drawable/ic_toys_black_24dp"
+        android:title="成绩" />
+    <item
+        android:id="@+id/item_find"
+        android:icon="@drawable/ic_zoom_in_black_24dp"
+        android:title="发现" />
+    <item
+        android:id="@+id/item_my"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="我的" />
+</menu>
