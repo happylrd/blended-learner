@@ -19,7 +19,12 @@
         </activity>
         <activity android:name=".ui.AdministratorActivity" />
         <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.ActivityBeanActivity" />
+        <activity
+            android:name=".ui.ActDetailActivity"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity
+            android:name=".ui.AddActActivity"
+            android:parentActivityName=".ui.MainActivity" />
     </application>
 
 </manifest>

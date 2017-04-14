@@ -59,7 +59,7 @@
             tools:text="2017-04-06T12:00:00" />
 
         <CheckBox
-            android:id="@+id/cb_state"
+            android:id="@+id/cb_has_passed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:enabled="false"

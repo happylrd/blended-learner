@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 
@@ -34,7 +35,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ActivityBeanActivity extends AppCompatActivity {
+public class ActDetailActivity extends AppCompatActivity {
 
     public static final String ACTIVITY_BEAN_ID = "activity_bean_id";
 
@@ -42,18 +43,18 @@ public class ActivityBeanActivity extends AppCompatActivity {
 
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private Toolbar mToolbar;
-    private FloatingActionButton mJoinFAB;
+    private FloatingActionButton mModifyActFAB;
 
     private ImageView mActivityBeanImage;
     private TextView mNameText;
     private TextView mScoreText;
     private TextView mDescText;
-    private CheckBox mStateCheck;
+    private CheckBox mHasPassedCheck;
     private TextView mStartTimeText;
     private TextView mEndTimeText;
 
     public static Intent newIntent(Context context, Integer activityBeanId) {
-        Intent intent = new Intent(context, ActivityBeanActivity.class);
+        Intent intent = new Intent(context, ActDetailActivity.class);
 
         intent.putExtra(ACTIVITY_BEAN_ID, activityBeanId);
 
@@ -63,7 +64,7 @@ public class ActivityBeanActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity_bean);
+        setContentView(R.layout.activity_act_detail);
 
         Intent intent = getIntent();
         Integer activityBeanId = intent.getIntExtra(ACTIVITY_BEAN_ID, 0);
@@ -77,15 +78,16 @@ public class ActivityBeanActivity extends AppCompatActivity {
         mCollapsingToolbarLayout = (CollapsingToolbarLayout)
                 findViewById(R.id.collapsing_toolbar);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mJoinFAB = (FloatingActionButton) findViewById(R.id.fab_join);
+        mModifyActFAB = (FloatingActionButton) findViewById(R.id.fab_modify_act);
         mActivityBeanImage = (ImageView) findViewById(R.id.iv_image);
         mNameText = (TextView) findViewById(R.id.tv_name);
         mScoreText = (TextView) findViewById(R.id.tv_score);
         mDescText = (TextView) findViewById(R.id.tv_desc);
-        mStateCheck = (CheckBox) findViewById(R.id.cb_state);
+        mHasPassedCheck = (CheckBox) findViewById(R.id.cb_has_passed);
         mStartTimeText = (TextView) findViewById(R.id.tv_start_time);
         mEndTimeText = (TextView) findViewById(R.id.tv_end_time);
 
+//        mToolbar.setTitle("活动名");
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -94,14 +96,14 @@ public class ActivityBeanActivity extends AppCompatActivity {
     }
 
     private void initListener() {
-        mStateCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mHasPassedCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 LogUtil.i("isChecked:" + isChecked);
             }
         });
 
-        mJoinFAB.setOnClickListener(new View.OnClickListener() {
+        mModifyActFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /**
@@ -109,13 +111,12 @@ public class ActivityBeanActivity extends AppCompatActivity {
                  * get current activity id
                  * POST to studentactivity
                  */
-                Student student = ShareUtil.getStudent(ActivityBeanActivity.this,
+                Student student = ShareUtil.getStudent(ActDetailActivity.this,
                         StaticClass.SHARE_CURRENT_USER, "");
 
                 StudentActivityBean saBean = new StudentActivityBean();
                 saBean.setStudentId(student.getId());
                 saBean.setActivityId(activityBean.getId());
-                saBean.setHasJoined(true);
 
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(StaticClass.NAIVE_SCORE_MS_BASE_URL)
@@ -141,41 +142,43 @@ public class ActivityBeanActivity extends AppCompatActivity {
     }
 
     private void initData(Integer activityBeanId) {
-        Retrofit retrofit = StaticClass.getRetrofitInstance();
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(StaticClass.NAIVE_SCORE_MS_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
 
         NaiveScoreMSService service = retrofit.create(NaiveScoreMSService.class);
 
-        Call<ResponseBody> bodyCall = service.findOneActivityBean(activityBeanId);
-        bodyCall.enqueue(new Callback<ResponseBody>() {
+        Call<ActivityBean> actBeanCall = service.getActBean(activityBeanId);
+        actBeanCall.enqueue(new Callback<ActivityBean>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    Gson gson = new Gson();
-                    String jsonData = response.body().string();
-                    activityBean = gson.fromJson(jsonData, ActivityBean.class);
+            public void onResponse(Call<ActivityBean> call, Response<ActivityBean> response) {
 
-                    LogUtil.i(activityBean.getName());
+                ActivityBean activityBean = response.body();
+                LogUtil.i(activityBean.getName());
 
-                    mCollapsingToolbarLayout.setTitle(activityBean.getName());
+                mCollapsingToolbarLayout.setTitle(activityBean.getName());
 
-                    //TODO: add image support later
-                    Glide.with(ActivityBeanActivity.this)
-                            .load(R.drawable.default_activitybean_image)
-                            .into(mActivityBeanImage);
+                //TODO: add image support later
+                Glide.with(ActDetailActivity.this)
+                        .load(R.drawable.default_activitybean_image)
+                        .into(mActivityBeanImage);
 
-                    mNameText.setText(activityBean.getName());
-                    mScoreText.setText(activityBean.getScore());
-                    mDescText.setText(activityBean.getDesc());
-                    mStateCheck.setChecked(activityBean.getState() != 0);
-                    mStartTimeText.setText(activityBean.getStartTime());
-                    mEndTimeText.setText(activityBean.getEndTime());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                mNameText.setText(activityBean.getName());
+                mScoreText.setText(activityBean.getScore());
+                mDescText.setText(activityBean.getDesc());
+                mHasPassedCheck.setChecked(activityBean.getHasPassed());
+
+                mStartTimeText.setText(activityBean.getStartTime().toString());
+                mEndTimeText.setText(activityBean.getEndTime().toString());
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<ActivityBean> call, Throwable t) {
 
             }
         });

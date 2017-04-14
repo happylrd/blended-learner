@@ -1,7 +1,7 @@
 package io.happylrd.childishscorems.model;
-
-
 import com.google.gson.annotations.SerializedName;
+
+import java.util.Date;
 
 /**
  * url: http://localhost:8000/activities/2/
@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * "name": "Flutter learning",
  * "score": "6.66",
  * "desc": "Build a high-quality app by using Flutter with Dart during one week.",
- * "state": 0,
+ * "has_passed": false,
  * "start_time": "2017-04-03T12:00:00",
  * "end_time": "2017-04-10T12:00:00",
  * "add_time": "2017-04-03T19:37:00"
@@ -23,13 +23,15 @@ public class ActivityBean {
     private String name;
     private String score;
     private String desc;
-    private Integer state;
+
+    @SerializedName("has_passed")
+    private Boolean hasPassed;
 
     @SerializedName("start_time")
-    private String startTime;
+    private Date startTime;
 
     @SerializedName("end_time")
-    private String endTime;
+    private Date endTime;
 
     @SerializedName("add_time")
     private String addTime;
@@ -62,27 +64,27 @@ public class ActivityBean {
         this.desc = desc;
     }
 
-    public Integer getState() {
-        return state;
+    public Boolean getHasPassed() {
+        return hasPassed;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setHasPassed(Boolean hasPassed) {
+        this.hasPassed = hasPassed;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 

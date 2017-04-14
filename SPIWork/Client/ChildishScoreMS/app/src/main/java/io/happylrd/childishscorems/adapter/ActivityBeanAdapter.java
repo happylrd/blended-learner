@@ -7,15 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import io.happylrd.childishscorems.R;
 import io.happylrd.childishscorems.model.ActivityBean;
-import io.happylrd.childishscorems.ui.ActivityBeanActivity;
+import io.happylrd.childishscorems.ui.ActDetailActivity;
 
 public class ActivityBeanAdapter extends RecyclerView.Adapter<ActivityBeanAdapter.ViewHolder> {
 
@@ -30,7 +28,7 @@ public class ActivityBeanAdapter extends RecyclerView.Adapter<ActivityBeanAdapte
         private TextView mDescText;
         private TextView mStartTimeText;
         private TextView mEndTimeText;
-        private CheckBox mStateCheck;
+        private CheckBox mHasPassedCheck;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -41,17 +39,18 @@ public class ActivityBeanAdapter extends RecyclerView.Adapter<ActivityBeanAdapte
             mDescText = (TextView) itemView.findViewById(R.id.tv_desc);
             mStartTimeText = (TextView) itemView.findViewById(R.id.tv_start_time);
             mEndTimeText = (TextView) itemView.findViewById(R.id.tv_end_time);
-            mStateCheck = (CheckBox) itemView.findViewById(R.id.cb_state);
+            mHasPassedCheck = (CheckBox) itemView.findViewById(R.id.cb_has_passed);
         }
 
         public void bindActivityBean(ActivityBean activityBean) {
             mNameText.setText(activityBean.getName());
             mScoreText.setText(activityBean.getScore());
             mDescText.setText(activityBean.getDesc());
-            mStartTimeText.setText(activityBean.getStartTime());
-            mEndTimeText.setText(activityBean.getEndTime());
-            //TODO: 0 for unchecked, will be optimized later
-            mStateCheck.setChecked(activityBean.getState() != 0);
+
+            //TODO:
+            mStartTimeText.setText(activityBean.getStartTime().toString());
+            mEndTimeText.setText(activityBean.getEndTime().toString());
+            mHasPassedCheck.setChecked(activityBean.getHasPassed());
         }
     }
 
@@ -66,7 +65,7 @@ public class ActivityBeanAdapter extends RecyclerView.Adapter<ActivityBeanAdapte
         }
 
         View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.item_activity_bean, parent, false);
+                .inflate(R.layout.item_act, parent, false);
 
         final ViewHolder holder = new ViewHolder(view);
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +74,7 @@ public class ActivityBeanAdapter extends RecyclerView.Adapter<ActivityBeanAdapte
                 int position = holder.getAdapterPosition();
                 ActivityBean activityBean = mActivityBeanList.get(position);
 
-                mContext.startActivity(ActivityBeanActivity
+                mContext.startActivity(ActDetailActivity
                         .newIntent(mContext, activityBean.getId()));
             }
         });

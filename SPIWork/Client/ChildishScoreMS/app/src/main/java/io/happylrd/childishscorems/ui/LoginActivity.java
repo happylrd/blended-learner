@@ -71,7 +71,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public void doLogin(final String username, final String password) {
         if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
-            Retrofit retrofit = StaticClass.getRetrofitInstance();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(StaticClass.NAIVE_SCORE_MS_BASE_URL)
+                    .build();
 
             NaiveScoreMSService service = retrofit.create(NaiveScoreMSService.class);
 

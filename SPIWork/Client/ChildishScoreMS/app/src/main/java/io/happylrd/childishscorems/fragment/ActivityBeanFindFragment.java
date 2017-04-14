@@ -10,12 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import io.happylrd.childishscorems.R;
@@ -24,11 +20,11 @@ import io.happylrd.childishscorems.api.NaiveScoreMSService;
 import io.happylrd.childishscorems.model.ActivityBean;
 import io.happylrd.childishscorems.utils.LogUtil;
 import io.happylrd.childishscorems.utils.StaticClass;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ActivityBeanFindFragment extends Fragment {
 
@@ -40,7 +36,7 @@ public class ActivityBeanFindFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_activity_bean_find, null);
+        View view = inflater.inflate(R.layout.fragment_act_find, null);
 
         initView(view);
         initData();
@@ -49,40 +45,33 @@ public class ActivityBeanFindFragment extends Fragment {
     }
 
     private void initData() {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+
         //TODO: will be modified later
-        Retrofit retrofit = StaticClass.getRetrofitInstance();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(StaticClass.NAIVE_SCORE_MS_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
 
         NaiveScoreMSService service = retrofit.create(NaiveScoreMSService.class);
 
-        Call<ResponseBody> bodyCall = service.findActivityBeans();
-        bodyCall.enqueue(new Callback<ResponseBody>() {
+        Call<List<ActivityBean>> listActBeanCall = service.listActBean();
+        listActBeanCall.enqueue(new Callback<List<ActivityBean>>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    String jsonData = response.body().string();
+            public void onResponse(Call<List<ActivityBean>> call, Response<List<ActivityBean>> response) {
 
-                    LogUtil.i(jsonData);
+                List<ActivityBean> actBeanList = response.body();
 
-                    JsonParser parser = new JsonParser();
-                    JsonArray array = parser.parse(jsonData).getAsJsonArray();
-                    Gson gson = new Gson();
-                    List<ActivityBean> activityBeanList = new ArrayList<>();
-                    for (JsonElement element : array) {
-                        ActivityBean activityBean = gson.fromJson(element, ActivityBean.class);
+//                LogUtil.i(actBeanList.get(0).getStartTime().toString());
 
-                        LogUtil.i(activityBean.getName());
-
-                        activityBeanList.add(activityBean);
-                    }
-                    mAdapter = new ActivityBeanAdapter(activityBeanList);
-                    mRecyclerView.setAdapter(mAdapter);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                mAdapter = new ActivityBeanAdapter(actBeanList);
+                mRecyclerView.setAdapter(mAdapter);
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<List<ActivityBean>> call, Throwable t) {
 
             }
         });

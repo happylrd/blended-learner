@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import io.happylrd.childishscorems.R;
 import io.happylrd.childishscorems.adapter.ViewPagerAdapter;
@@ -23,7 +25,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private BottomNavigationView mBottomNavigationView;
     private MenuItem mPrevMenuItem;
 
-    private FloatingActionButton mAddFAB;
+    private FloatingActionsMenu mFABMenu;
+    private FloatingActionButton mAddActivityFAB;
 
     public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -42,14 +45,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initView() {
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mBottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
-        mAddFAB = (FloatingActionButton) findViewById(R.id.fab_add);
 
-        mAddFAB.setVisibility(View.GONE);
+        mFABMenu = (FloatingActionsMenu) findViewById(R.id.fab_menu);
+        mAddActivityFAB = (FloatingActionButton) findViewById(R.id.fab_add_activity);
 
         setupWithViewPager(mViewPager);
     }
 
     private void initListener() {
+        mFABMenu.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+            @Override
+            public void onMenuExpanded() {
+
+            }
+
+            @Override
+            public void onMenuCollapsed() {
+
+            }
+        });
+
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -71,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        mAddFAB.setOnClickListener(this);
+        mAddActivityFAB.setOnClickListener(this);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -92,10 +107,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mBottomNavigationView.getMenu().getItem(position).setChecked(true);
                 mPrevMenuItem = mBottomNavigationView.getMenu().getItem(position);
 
+                //TODO: will be modified later
                 if (position == 0) {
-                    mAddFAB.setVisibility(View.GONE);
+                    mFABMenu.setVisibility(View.VISIBLE);
                 } else {
-                    mAddFAB.setVisibility(View.VISIBLE);
+                    mFABMenu.setVisibility(View.GONE);
                 }
             }
 
@@ -118,8 +134,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.fab_add:
-                //TODO: do something
+            case R.id.fab_add_activity:
+                startActivity(AddActActivity.newIntent(this));
+                mFABMenu.collapse();
         }
     }
 }

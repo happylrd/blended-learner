@@ -8,7 +8,6 @@ import com.google.gson.annotations.SerializedName;
  * "id": 2,
  * "student": 5,
  * "activity": 2,
- * "has_joined": true,
  * "has_finished": false,
  * "add_time": "2017-04-03T19:58:00"
  * }
@@ -22,9 +21,6 @@ public class StudentActivityBean {
 
     @SerializedName("activity")
     private Integer activityId;
-
-    @SerializedName("has_joined")
-    private Boolean hasJoined;
 
     @SerializedName("has_finished")
     private Boolean hasFinished;
@@ -50,14 +46,6 @@ public class StudentActivityBean {
 
     public void setActivityId(Integer activityId) {
         this.activityId = activityId;
-    }
-
-    public Boolean getHasJoined() {
-        return hasJoined;
-    }
-
-    public void setHasJoined(Boolean hasJoined) {
-        this.hasJoined = hasJoined;
     }
 
     public Boolean getHasFinished() {

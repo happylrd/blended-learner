@@ -1,5 +1,8 @@
 package io.happylrd.childishscorems.api;
 
+import java.util.List;
+
+import io.happylrd.childishscorems.model.ActivityBean;
 import io.happylrd.childishscorems.model.StudentActivityBean;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -16,10 +19,16 @@ public interface NaiveScoreMSService {
     Call<ResponseBody> findOneTeacher(@Path("username") String username);
 
     @GET("activities")
-    Call<ResponseBody> findActivityBeans();
+    Call<List<ActivityBean>> listActBean();
+
+//    @GET("activities/{id}")
+//    Call<ResponseBody> findOneActivityBean(@Path("id") Integer id);
 
     @GET("activities/{id}")
-    Call<ResponseBody> findOneActivityBean(@Path("id") Integer id);
+    Call<ActivityBean> getActBean(@Path("id") Integer id);
+
+    @POST("activities/")
+    Call<ActivityBean> createActBean(@Body ActivityBean activityBean);
 
     @POST("studentactivities/")
     Call<StudentActivityBean> createSABean(@Body StudentActivityBean studentActivityBean);
