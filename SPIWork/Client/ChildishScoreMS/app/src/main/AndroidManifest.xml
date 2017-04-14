@@ -25,6 +25,7 @@
         <activity
             android:name=".ui.AddActActivity"
             android:parentActivityName=".ui.MainActivity" />
+        <activity android:name=".ui.UpdateActActivity"></activity>
     </application>
 
 </manifest>

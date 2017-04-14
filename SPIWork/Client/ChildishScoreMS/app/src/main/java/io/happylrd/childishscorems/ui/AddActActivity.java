@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -135,7 +136,10 @@ public class AddActActivity extends AppCompatActivity {
                     public void onResponse(Call<ActivityBean> call, Response<ActivityBean> response) {
                         ActivityBean activityBean = response.body();
                         LogUtil.i(activityBean.getName());
+
                         //TODO: do something
+                        Toast.makeText(AddActActivity.this, "添加活动成功", Toast.LENGTH_SHORT)
+                                .show();
                     }
 
                     @Override
