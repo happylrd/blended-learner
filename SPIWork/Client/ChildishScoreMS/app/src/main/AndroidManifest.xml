@@ -21,7 +21,8 @@
         <activity android:name=".ui.MainActivity" />
         <activity
             android:name=".ui.ActDetailActivity"
-            android:parentActivityName=".ui.MainActivity" />
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/ScoreMSTheme" />
         <activity
             android:name=".ui.AddActActivity"
             android:parentActivityName=".ui.MainActivity" />
