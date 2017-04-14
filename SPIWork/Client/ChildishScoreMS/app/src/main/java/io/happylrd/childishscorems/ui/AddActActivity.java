@@ -1,6 +1,7 @@
 package io.happylrd.childishscorems.ui;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -13,11 +14,13 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,6 +28,7 @@ import io.happylrd.childishscorems.R;
 import io.happylrd.childishscorems.adapter.GsonUTCDateAdapter;
 import io.happylrd.childishscorems.api.NaiveScoreMSService;
 import io.happylrd.childishscorems.model.ActivityBean;
+import io.happylrd.childishscorems.utils.DateUtil;
 import io.happylrd.childishscorems.utils.LogUtil;
 import io.happylrd.childishscorems.utils.StaticClass;
 import retrofit2.Call;
@@ -42,8 +46,10 @@ public class AddActActivity extends AppCompatActivity {
     private EditText mDescEdit;
     private CheckBox mHasPassedCheck;
 
-    private TextView mStartTimeText;
-    private TextView mEndTimeText;
+    private TextView mStartTimeDateText;
+    private TextView mStartTimeTimeText;
+    private TextView mEndTimeDateText;
+    private TextView mEndTimeTimeText;
 
     private Button mSubmitBtn;
 
@@ -66,8 +72,10 @@ public class AddActActivity extends AppCompatActivity {
         mScoreEdit = (EditText) findViewById(R.id.et_act_score);
         mDescEdit = (EditText) findViewById(R.id.et_act_desc);
         mHasPassedCheck = (CheckBox) findViewById(R.id.cb_act_has_passed);
-        mStartTimeText = (TextView) findViewById(R.id.tv_act_start_time);
-        mEndTimeText = (TextView) findViewById(R.id.tv_act_end_time);
+        mStartTimeDateText = (TextView) findViewById(R.id.tv_act_start_time_date);
+        mStartTimeTimeText = (TextView) findViewById(R.id.tv_act_start_time_time);
+        mEndTimeDateText = (TextView) findViewById(R.id.tv_act_end_time_date);
+        mEndTimeTimeText = (TextView) findViewById(R.id.tv_act_end_time_time);
         mSubmitBtn = (Button) findViewById(R.id.btn_submit);
 
         mToolbar.setTitle("添加活动");
@@ -89,12 +97,13 @@ public class AddActActivity extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(AddActActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        if (vv.getId() == R.id.tv_act_start_time) {
-                            String date = year + "/" + (monthOfYear + 1) + "/" + dayOfMonth;
-                            mStartTimeText.setText(date);
+                        String dateStr = year + "-"
+                                + StaticClass.autoFillZero((monthOfYear + 1), 2) + "-"
+                                + StaticClass.autoFillZero(dayOfMonth, 2);
+                        if (vv.getId() == R.id.tv_act_start_time_date) {
+                            mStartTimeDateText.setText(dateStr);
                         } else {
-                            String date = year + "/" + (monthOfYear + 1) + "/" + dayOfMonth;
-                            mEndTimeText.setText(date);
+                            mEndTimeDateText.setText(dateStr);
                         }
                     }
                 }, now.get(Calendar.YEAR),
@@ -105,21 +114,66 @@ public class AddActActivity extends AppCompatActivity {
             }
         };
 
-        mStartTimeText.setOnClickListener(showDateListener);
-        mEndTimeText.setOnClickListener(showDateListener);
+        View.OnClickListener showTimeListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final View vv = v;
+
+                Calendar now = Calendar.getInstance();
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(AddActActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        String timeStr = StaticClass.autoFillZero(hourOfDay, 2) + ":"
+                                + StaticClass.autoFillZero(minute, 2)
+                                + ":00";
+                        if (vv.getId() == R.id.tv_act_start_time_time) {
+                            mStartTimeTimeText.setText(timeStr);
+                        } else {
+                            mEndTimeTimeText.setText(timeStr);
+                        }
+                    }
+                }, now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        true);
+
+                timePickerDialog.show();
+            }
+        };
+
+        mStartTimeDateText.setOnClickListener(showDateListener);
+        mEndTimeDateText.setOnClickListener(showDateListener);
+
+        mStartTimeTimeText.setOnClickListener(showTimeListener);
+        mEndTimeTimeText.setOnClickListener(showTimeListener);
 
         mSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // set act data
                 ActivityBean actBean = new ActivityBean();
                 actBean.setName(mNameEdit.getText().toString().trim());
                 actBean.setScore(mScoreEdit.getText().toString().trim());
                 actBean.setDesc(mDescEdit.getText().toString().trim());
                 actBean.setHasPassed(mHasPassedCheck.isChecked());
 
-                actBean.setStartTime(new Date());
-                actBean.setEndTime(new Date());
+                String startTimeStr = mStartTimeDateText.getText().toString().trim() + "T"
+                        + mStartTimeTimeText.getText().toString().trim();
+                try {
+                    actBean.setStartTime(DateUtil.parse(startTimeStr));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
+                String endTimeStr = mEndTimeDateText.getText().toString().trim() + "T"
+                        + mEndTimeTimeText.getText().toString().trim();
+                try {
+                    actBean.setEndTime(DateUtil.parse(endTimeStr));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                // interact with api server
                 Gson gson = new GsonBuilder()
                         .registerTypeAdapter(Date.class, new GsonUTCDateAdapter())
                         .create();
@@ -137,9 +191,7 @@ public class AddActActivity extends AppCompatActivity {
                         ActivityBean activityBean = response.body();
                         LogUtil.i(activityBean.getName());
 
-                        //TODO: do something
-                        Toast.makeText(AddActActivity.this, "添加活动成功", Toast.LENGTH_SHORT)
-                                .show();
+                        //TODO: give tips and finish the activity.
                     }
 
                     @Override

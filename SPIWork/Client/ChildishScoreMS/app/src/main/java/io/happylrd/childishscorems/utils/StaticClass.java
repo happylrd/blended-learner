@@ -8,4 +8,8 @@ public class StaticClass {
     public static final String ADMIN_MS_URL = NAIVE_SCORE_MS_BASE_URL + "admin/";
 
     public static final String SHARE_CURRENT_USER = "current_user";
+
+    public static String autoFillZero(int number, int length) {
+        return String.format("%0" + length + "d", number);
+    }
 }
