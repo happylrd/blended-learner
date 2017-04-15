@@ -16,6 +16,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import io.happylrd.childishscorems.R;
 import io.happylrd.childishscorems.adapter.ViewPagerAdapter;
 import io.happylrd.childishscorems.fragment.ActivityBeanFindFragment;
+import io.happylrd.childishscorems.fragment.ScoreFragment;
 import io.happylrd.childishscorems.fragment.UserFragment;
 import io.happylrd.childishscorems.utils.LogUtil;
 
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setupWithViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ActivityBeanFindFragment());
-        adapter.addFragment(new UserFragment());
+        adapter.addFragment(new ScoreFragment());
         adapter.addFragment(new UserFragment());
         adapter.addFragment(new UserFragment());
         viewPager.setAdapter(adapter);

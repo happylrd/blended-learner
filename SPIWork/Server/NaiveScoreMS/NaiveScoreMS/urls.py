@@ -18,7 +18,7 @@ from django.contrib import admin
 
 from users.views import StudentListView, StudentDetailView, TeacherListView, TeacherDetailView, AdministratorListView
 from activities.views import ActivityListView, ActivityDetailView
-from operation.views import StudentActivityListView, StudentActivityDetailView
+from operation.views import StudentActivityListView, StudentActivityDetailView, get_total_score
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -46,4 +46,7 @@ urlpatterns = [
         StudentActivityListView.as_view(), name='student-activity-list'),
     url(r'^studentactivities/(?P<pk>[0-9]+)/$',
         StudentActivityDetailView.as_view(), name='student-activity-detail'),
+
+    url(r'^score/students/(?P<username>.*)/sum/$',
+        get_total_score, name='get_total_score'),
 ]

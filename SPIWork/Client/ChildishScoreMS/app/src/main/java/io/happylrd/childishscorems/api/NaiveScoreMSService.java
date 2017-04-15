@@ -30,4 +30,8 @@ public interface NaiveScoreMSService {
 
     @POST("studentactivities/")
     Call<StudentActivityBean> createSABean(@Body StudentActivityBean studentActivityBean);
+
+    //TODO: will be improved later
+    @GET("score/students/{username}/sum/")
+    Call<ResponseBody> getTotalScore(@Path("username") String username);
 }
