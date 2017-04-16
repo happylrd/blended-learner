@@ -30,6 +30,7 @@ public class UserFragment extends Fragment {
     private TextView mBirthdayText;
     private TextView mSchoolText;
     private TextView mMajorText;
+    private TextView mPermissionTypeText;
 
     @Nullable
     @Override
@@ -54,6 +55,7 @@ public class UserFragment extends Fragment {
         mBirthdayText = (TextView) view.findViewById(R.id.tv_birthday);
         mSchoolText = (TextView) view.findViewById(R.id.tv_school);
         mMajorText = (TextView) view.findViewById(R.id.tv_major);
+        mPermissionTypeText = (TextView) view.findViewById(R.id.tv_permission_type);
     }
 
     private void initData() {
@@ -65,6 +67,20 @@ public class UserFragment extends Fragment {
         mBirthdayText.setText(student.getBirthday());
         mSchoolText.setText(student.getSchool());
         mMajorText.setText(student.getMajor());
+
+        switch (student.getPermissionType()) {
+            case StaticClass.PERMISSION_TYPE_NORMAL:
+                mPermissionTypeText.setText("一般");
+                break;
+            case StaticClass.PERMISSION_TYPE_ADD:
+                mPermissionTypeText.setText("添加");
+                break;
+            case StaticClass.PERMISSION_TYPE_CHECK:
+                mPermissionTypeText.setText("检查");
+                break;
+            default:
+                break;
+        }
 
         Glide.with(getActivity())
                 .load(R.drawable.default_activitybean_image)
