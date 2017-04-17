@@ -1,6 +1,8 @@
 package io.happylrd.childishscorems.ui;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,8 +41,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button mLoginBtn;
     private TextView mAdministratorText;
+    private TextView mGotoRegisterText;
 
     private ProgressDialog mProgressDialog;
+
+    public static Intent newIntent(Context context){
+        return new Intent(context, LoginActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginBtn = (Button) findViewById(R.id.btn_login);
         mAdministratorText = (TextView) findViewById(R.id.tv_administrator);
+        mGotoRegisterText = (TextView) findViewById(R.id.tv_goto_register);
     }
 
     private void initListener() {
@@ -107,6 +115,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        mGotoRegisterText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegisterActivity.newIntent(LoginActivity.this)));
+                finish();
             }
         });
     }

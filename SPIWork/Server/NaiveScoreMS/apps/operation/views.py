@@ -21,12 +21,16 @@ class StudentActivityDetailView(generics.RetrieveUpdateDestroyAPIView):
 def get_total_score(request, username):
     result = Activity.objects.filter(studentactivity__student__username=username, studentactivity__has_finished=True,
                                      has_passed=True)
-    print result
+    # print result
+
     if result:
         total_score = result.aggregate(Sum('score'))
-        return JsonResponse(total_score)
+        myActList = dict({'activities': list(result.values())}, **total_score)
+        # print myActList
+        return JsonResponse(myActList)
     else:
         empty_data = {
+            'activities': [],
             'score__sum': '-1'
         }
         return JsonResponse(empty_data)

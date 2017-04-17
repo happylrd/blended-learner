@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,8 @@ public class ScoreFragment extends Fragment {
         Student student = ShareUtil.getStudent(getActivity(),
                 StaticClass.SHARE_CURRENT_USER, "");
 
+        mCollapsingToolbarLayout.setTitle(student.getRealname());
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(StaticClass.NAIVE_SCORE_MS_BASE_URL)
                 .build();
@@ -77,10 +80,15 @@ public class ScoreFragment extends Fragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String jsonData = response.body().string();
-                    LogUtil.i("totalScore:" + jsonData);
+//                    LogUtil.i("totalScore:" + jsonData);
                     JSONObject jsonObject = new JSONObject(jsonData);
                     String totalScore = jsonObject.getString("score__sum");
-                    mTotalScoreText.setText(totalScore);
+
+                    if(TextUtils.equals(totalScore, "-1")){
+                        mTotalScoreText.setText("你还没有参加任何活动!");
+                    }else{
+                        mTotalScoreText.setText(totalScore);
+                    }
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }

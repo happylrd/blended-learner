@@ -13,6 +13,9 @@ public class StaticClass {
     public static final int PERMISSION_TYPE_ADD = 1;
     public static final int PERMISSION_TYPE_CHECK = 2;
 
+    public static final String DEFAULT_SCHOOL = "北京邮电大学";
+    public static final String DEFAULT_MAJOR = "软件工程";
+
     public static String autoFillZero(int number, int length) {
         return String.format("%0" + length + "d", number);
     }

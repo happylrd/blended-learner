@@ -61,6 +61,7 @@ public class UserFragment extends Fragment {
     private void initData() {
         Student student = ShareUtil.getStudent(getActivity(),
                 StaticClass.SHARE_CURRENT_USER, "");
+        mCollapsingToolbarLayout.setTitle(student.getRealname());
         mRealnameText.setText(student.getRealname());
         mMobileText.setText(student.getMobile());
         mGenderText.setText(student.getGender());

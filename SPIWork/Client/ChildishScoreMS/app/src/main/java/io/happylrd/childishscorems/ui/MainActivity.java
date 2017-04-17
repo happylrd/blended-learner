@@ -76,11 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.item_score:
                         mViewPager.setCurrentItem(1);
                         break;
-                    case R.id.item_find:
-                        mViewPager.setCurrentItem(2);
-                        break;
                     case R.id.item_my:
-                        mViewPager.setCurrentItem(3);
+                        mViewPager.setCurrentItem(2);
                         break;
                 }
                 return true;
@@ -127,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ActivityBeanFindFragment());
         adapter.addFragment(new ScoreFragment());
-        adapter.addFragment(new UserFragment());
         adapter.addFragment(new UserFragment());
         viewPager.setAdapter(adapter);
     }

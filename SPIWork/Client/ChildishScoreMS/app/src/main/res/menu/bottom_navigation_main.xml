@@ -9,10 +9,6 @@
         android:icon="@drawable/ic_toys_black_24dp"
         android:title="成绩" />
     <item
-        android:id="@+id/item_find"
-        android:icon="@drawable/ic_zoom_in_black_24dp"
-        android:title="发现" />
-    <item
         android:id="@+id/item_my"
         android:icon="@drawable/ic_person_black_24dp"
         android:title="我的" />
