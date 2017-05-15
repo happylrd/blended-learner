@@ -1,14 +1,17 @@
 # TeraSort
 
 ## Overview
+
 >A simple **TeraSort** Implementation that is based on *Hadoop MapReduce framework*.
 
 ## Preliminary knowledge
+
 >Shuffle: data from map task to reduce task.
 
 >Partition: decide the current output data should be passed to which reduce task to process according to key or value or the number of reduce tasks(Here, based on key and the number of reduce tasks).
 
 ## Key idea
+
 **sample + partition**
 
 Sample: get the split points according to the number of reduce tasks.
@@ -25,6 +28,7 @@ int samplePerPartition =
 Notice **inputSplitList.size()** will be 1 if the file size below the block size of HDFS(64MB or 128MB).
 
 Sample for the first *samplePerPartition* records
+
 ```java
 List<Integer> sampleList = new ArrayList<>();
 for (InputSplit split : inputSplitList) {
@@ -52,6 +56,7 @@ for (InputSplit split : inputSplitList) {
 ```
 
 After Sort, get split points and write them into local file system, prepare for partition.
+
 ```java
 FileSystem fs = FileSystem
         .get(job.getConfiguration());
@@ -97,7 +102,9 @@ public int getPartition(IntWritable key, NullWritable value, int reduceNum) {
 ```
 
 ## Execute Step
+
 ### 1.Produce Test Data
+
 Run [DataGenerator](https://github.com/happylrd/blended-learner/blob/master/HadoopDemo/TeraSort/src/io/happylrd/datagen/DataGenerator.java) to generate test data in input directory.
 
 Result
