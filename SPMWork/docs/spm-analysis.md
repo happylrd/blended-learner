@@ -6,7 +6,7 @@
 
 - [ ] action
 - [ ] service
-- [ ] dao
+- [x] dao
 - [x] domain
 - [x] filter
 - [x] interceptor
@@ -39,12 +39,9 @@
 
 `domain`改进
 
-编码规范
-- 类名Pascal风格，对应的数据表名为小写加下划线。
-- 属性名驼峰，对应的数据表中的字段名为小写加下划线。
+编码风格类问题参见[编码风格](./code-style.md)。
 
-将 基于xml文件的配置 替换成 基于注解的配置。
-
+计划 将 基于xml文件的配置 替换成 基于注解的配置。
 
 `util`, `filter`, `interceptor`改进
 
@@ -54,6 +51,9 @@
 发现 `interceptor`包下的 `MethodCacheInterceptor` 没有被显式使用，考虑删除。
 用时自己再写。
 
+`dao`改进
+
+规范`dao`层代码
 
 ## Database Design
 

@@ -2,27 +2,24 @@ package com.buptsse.spm.dao;
 
 import java.util.List;
 
-import com.buptsse.spm.domain.Course;
 import com.buptsse.spm.domain.Exam;
 
-
-/**
- * @author BUPT-TC
- * @param <T>
- * @date 2015年11月23日 下午2:46
- * @description	在线测试持久层接口定义
- * @modify BUPT-TC
- * @modifyDate 
- */
-
+// 在线测试持久层接口
 public interface IExamDao {
-	public boolean saveExam(Exam exam);
-	public boolean updateExam(Exam exam);
-	public boolean deleteExam(Exam exam);
-	public List<Exam> findExam(String hql,Exam[] param);
-	public List<Exam> findExam(String hql,List param);
-	public boolean saveOrUpdateExam(Exam exam);
-	public Long countExam(String hql,List param);
-	public List findPage(String hql,List param , Integer page,Integer rows);	
 
+    boolean saveExam(Exam exam);
+
+    boolean updateExam(Exam exam);
+
+    boolean removeExam(Exam exam);
+
+    boolean saveOrUpdateExam(Exam exam);
+
+    List<Exam> listExam(String hql, Object[] param);
+
+    List<Exam> listExam(String hql, List<Object> param);
+
+    List<Exam> listExamByPage(String hql, List<Object> param, Integer pageNum, Integer pageSize);
+
+    Long countExam(String hql, List<Object> param);
 }

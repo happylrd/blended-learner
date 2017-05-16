@@ -8,181 +8,194 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.buptsse.spm.dao.IBaseDAO;
-
-/**
- * 基础数据库操作类
- * @author BUPT-TC
- * @date 2015年10月11日 下午2:46
- * @modify BUPT-TC
- * @modifyDate 
- */
 
 @Repository("baseDAO")
 @SuppressWarnings("all")
 public class BaseDAOImpl<T> implements IBaseDAO<T> {
 
-	private SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
 
-	@Autowired
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
-	private Session getCurrentSession() {
-		return sessionFactory.getCurrentSession();
-	}
+    private Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
+    }
 
-	public Serializable save(T o) {
-		return this.getCurrentSession().save(o);
-	}
+    @Override
+    public Serializable save(T o) {
+        return this.getCurrentSession().save(o);
+    }
 
-	public void delete(T o) {
-		this.getCurrentSession().delete(o);
-	}
+    @Override
+    public void remove(T o) {
+        this.getCurrentSession().delete(o);
+    }
 
-	public void update(T o) {
-		this.getCurrentSession().update(o);
-	}
+    @Override
+    public void update(T o) {
+        this.getCurrentSession().update(o);
+    }
 
-	public void saveOrUpdate(T o) {
-		this.getCurrentSession().saveOrUpdate(o);
-	}
+    @Override
+    public void saveOrUpdate(T o) {
+        this.getCurrentSession().saveOrUpdate(o);
+    }
 
-	
-	public List<T> find(String hql) {
-		return this.getCurrentSession().createQuery(hql).list();
-	}
+    @Override
+    public List<T> list(String hql) {
+        return this.getCurrentSession().createQuery(hql)
+                .list();
+    }
 
+    @Override
+    public List<T> list(String hql, Object[] param) {
+        Query query = this.getCurrentSession().createQuery(hql);
+        if (param != null && param.length > 0) {
+            for (int i = 0; i < param.length; i++) {
+                query.setParameter(i, param[i]);
+            }
+        }
+        return query.list();
+    }
 
-	public List<T> find(String hql, T[] param) {
-		Query q = this.getCurrentSession().createQuery(hql);
-		if (param != null && param.length > 0) {
-			for (int i = 0; i < param.length; i++) {
-				q.setParameter(i, param[i]);
-			}
-		}
-		return q.list();
-	}
+    @Override
+    public List<T> list(String hql, List<Object> param) {
+        Query query = this.getCurrentSession().createQuery(hql);
+        if (param != null && param.size() > 0) {
+            for (int i = 0; i < param.size(); i++) {
+                query.setParameter(i, param.get(i));
+            }
+        }
+        return query.list();
+    }
 
-	public List<T> find(String hql, List<T> param) {
-		Query q = this.getCurrentSession().createQuery(hql);
-		if (param != null && param.size() > 0) {
-			for (int i = 0; i < param.size(); i++) {
-				q.setParameter(i, param.get(i));
-			}
-		}
-		return q.list();
-	}
+    @Override
+    public List<T> list(String hql, Object[] param, Integer pageNum, Integer pageSize) {
+        if (pageNum == null || pageNum < 1) {
+            pageNum = 1;
+        }
+        if (pageSize == null || pageSize < 1) {
+            pageSize = 10;
+        }
 
-	public List<T> find(String hql, T[] param, Integer page, Integer rows) {
-		if (page == null || page < 1) {
-			page = 1;
-		}
-		if (rows == null || rows < 1) {
-			rows = 10;
-		}
-		Query q = this.getCurrentSession().createQuery(hql);
-		if (param != null && param.length > 0) {
-			for (int i = 0; i < param.length; i++) {
-				q.setParameter(i, param[i]);
-			}
-		}
-		return q.setFirstResult((page - 1) * rows).setMaxResults(rows).list();
-	}
+        Query query = this.getCurrentSession().createQuery(hql);
+        if (param != null && param.length > 0) {
+            for (int i = 0; i < param.length; i++) {
+                query.setParameter(i, param[i]);
+            }
+        }
+        return query.setFirstResult((pageNum - 1) * pageSize)
+                .setMaxResults(pageSize)
+                .list();
+    }
 
-	public List<T> find(String hql, List<T> param, Integer page,
-			Integer rows) {
-		if (page == null || page < 1) {
-			page = 1;
-		}
-		if (rows == null || rows < 1) {
-			rows = 10;
-		}
-		Query q = this.getCurrentSession().createQuery(hql);
-		if (param != null && param.size() > 0) {
-			for (int i = 0; i < param.size(); i++) {
-				q.setParameter(i, param.get(i));
-			}
-		}
-		
-		System.out.println("进入分页查询底层方法");
-		return q.setFirstResult((page - 1) * rows).setMaxResults(rows).list();
-	}
+    @Override
+    public List<T> list(String hql, List<Object> param, Integer pageNum, Integer pageSize) {
+        if (pageNum == null || pageNum < 1) {
+            pageNum = 1;
+        }
+        if (pageSize == null || pageSize < 1) {
+            pageSize = 10;
+        }
 
-	public T get(Class<T> c, Serializable obj) {
-		return (T) this.getCurrentSession().get(c, obj);
-	}
+        Query query = this.getCurrentSession().createQuery(hql);
+        if (param != null && param.size() > 0) {
+            for (int i = 0; i < param.size(); i++) {
+                query.setParameter(i, param.get(i));
+            }
+        }
+        return query.setFirstResult((pageNum - 1) * pageSize)
+                .setMaxResults(pageSize)
+                .list();
+    }
 
-	public T get(String hql, T[] param) {
-		List<T> l = this.find(hql, param);
-		if (l != null && l.size() > 0) {
-			return l.get(0);
-		} else {
-			return null;
-		}
-	}
+    @Override
+    public T get(Class<T> cls, Serializable id) {
+        return (T) this.getCurrentSession().get(cls, id);
+    }
 
-	public T get(String hql, List<T> param) {
-		List<T> l = this.find(hql, param);
-		if (l != null && l.size() > 0) {
-			return l.get(0);
-		} else {
-			return null;
-		}
-	}
+    public T get(String hql, Object[] param) {
+        Query query = this.getCurrentSession().createQuery(hql);
+        if (param != null && param.length > 0) {
+            for (int i = 0; i < param.length; i++) {
+                query.setParameter(i, param[i]);
+            }
+        }
+        return (T) query.uniqueResult();
+    }
 
-	public Long count(String hql) {
-		return (Long) this.getCurrentSession().createQuery(hql).uniqueResult();
-	}
+    public T get(String hql, List<Object> param) {
+        Query query = this.getCurrentSession().createQuery(hql);
+        if (param != null && param.size() > 0) {
+            for (int i = 0; i < param.size(); i++) {
+                query.setParameter(i, param.get(i));
+            }
+        }
+        return (T) query.uniqueResult();
+    }
 
-	public Long count(String hql, T[] param) {
-		Query q = this.getCurrentSession().createQuery(hql);
-		if (param != null && param.length > 0) {
-			for (int i = 0; i < param.length; i++) {
-				q.setParameter(i, param[i]);
-			}
-		}
-		return (Long) q.uniqueResult();
-	}
+    /*
+    sql 必须类似 select count(*) from ...
+    个人感觉与hql强相关，并不能封装成count。
+     */
+    public Long count(String hql) {
+        return (Long) this.getCurrentSession().createQuery(hql)
+                .uniqueResult();
+    }
 
-	public Long count(String hql, List<T> param) {
-		Query q = this.getCurrentSession().createQuery(hql);
-		if (param != null && param.size() > 0) {
-			for (int i = 0; i < param.size(); i++) {
-				q.setParameter(i, param.get(i));
-			}
-		}
-		return (Long) q.uniqueResult();
-	}
+    public Long count(String hql, Object[] param) {
+        Query query = this.getCurrentSession().createQuery(hql);
+        if (param != null && param.length > 0) {
+            for (int i = 0; i < param.length; i++) {
+                query.setParameter(i, param[i]);
+            }
+        }
+        return (Long) query.uniqueResult();
+    }
 
-	public Integer executeHql(String hql) {
-		return this.getCurrentSession().createQuery(hql).executeUpdate();
-	}
+    public Long count(String hql, List<Object> param) {
+        Query query = this.getCurrentSession().createQuery(hql);
+        if (param != null && param.size() > 0) {
+            for (int i = 0; i < param.size(); i++) {
+                query.setParameter(i, param.get(i));
+            }
+        }
+        return (Long) query.uniqueResult();
+    }
 
-	public Integer executeHql(String hql, T[] param) {
-		Query q = this.getCurrentSession().createQuery(hql);
-		if (param != null && param.length > 0) {
-			for (int i = 0; i < param.length; i++) {
-				q.setParameter(i, param[i]);
-			}
-		}
-		return q.executeUpdate();
-	}
+    @Override
+    public Integer executeHql(String hql) {
+        return this.getCurrentSession().createQuery(hql)
+                .executeUpdate();
+    }
 
-	public Integer executeHql(String hql, List<T> param) {
-		Query q = this.getCurrentSession().createQuery(hql);
-		if (param != null && param.size() > 0) {
-			for (int i = 0; i < param.size(); i++) {
-				q.setParameter(i, param.get(i));
-			}
-		}
-		return q.executeUpdate();
-	}
+    @Override
+    public Integer executeHql(String hql, Object[] param) {
+        Query query = this.getCurrentSession().createQuery(hql);
+        if (param != null && param.length > 0) {
+            for (int i = 0; i < param.length; i++) {
+                query.setParameter(i, param[i]);
+            }
+        }
+        return query.executeUpdate();
+    }
 
+    @Override
+    public Integer executeHql(String hql, List<Object> param) {
+        Query query = this.getCurrentSession().createQuery(hql);
+        if (param != null && param.size() > 0) {
+            for (int i = 0; i < param.size(); i++) {
+                query.setParameter(i, param.get(i));
+            }
+        }
+        return query.executeUpdate();
+    }
 }

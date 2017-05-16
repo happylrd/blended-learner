@@ -2,28 +2,24 @@ package com.buptsse.spm.dao;
 
 import java.util.List;
 
-import com.buptsse.spm.domain.Course;
 import com.buptsse.spm.domain.DownLoad;
 
-
-/**
- * @author BUPT-TC
- * @param <T>
- * @date 2015年11月23日 下午2:46
- * @description	文件下载持久层接口定义
- * @modify BUPT-TC
- * @modifyDate 
- */
-
+// 文件下载持久层接口
 public interface IDownLoadDao {
-	public boolean saveDownLoad(DownLoad downLoad);
-	public boolean updateDownLoad(DownLoad downLoad);
-	public boolean deleteDownLoad(DownLoad downLoad);
-	public List<DownLoad> findDownLoad(String hql,DownLoad[] param);
-	public List<DownLoad> findDownLoad(String hql,List param);
-	public boolean saveOrUpdateDownLoad(DownLoad downLoad);
-	public Long countDownLoad(String hql,List param);
-	public DownLoad findDownLoadById(Integer id);
-	
 
+    boolean saveDownLoad(DownLoad downLoad);
+
+    boolean updateDownLoad(DownLoad downLoad);
+
+    boolean removeDownLoad(DownLoad downLoad);
+
+    boolean saveOrUpdateDownLoad(DownLoad downLoad);
+
+    List<DownLoad> listDownLoad(String hql, Object[] param);
+
+    List<DownLoad> listDownLoad(String hql, List<Object> param);
+
+    DownLoad getDownLoadById(Integer id);
+
+    Long countDownLoad(String hql, List<Object> param);
 }

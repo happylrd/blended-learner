@@ -2,59 +2,37 @@ package com.buptsse.spm.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
-
 import com.buptsse.spm.dao.ICodeDao;
 import com.buptsse.spm.domain.Code;
 import com.buptsse.spm.service.ICodeService;
 
-
-/**
- * @author BUPT-TC 
- * @date 2015年11月16日 下午3:53
- * @description 数据字典的service层实现类定义 
- * @modify BUPT-TC 
- * @modifyDate 
- */
-
 @Transactional
 @Service
-public class CodeServiceImpl implements ICodeService{
+public class CodeServiceImpl implements ICodeService {
 
-	@Resource
-	private ICodeDao iCodeDao;
+    @Resource
+    private ICodeDao iCodeDao;
 
+    @Override
+    public Code findCodeById(String id) {
+        return iCodeDao.getCodeById(new Integer(id));
+    }
 
-	@Override
-	public Code findCodeById(String id) {
-		// TODO Auto-generated method stub
-		return iCodeDao.findCodeById(new Integer(id));
-	}
-
-
-
-	@Override
-	public Code findCodeName(String codeType, String codeCode) {
-		// TODO Auto-generated method stub
-		Code code = new Code();
-		String hql=" from Code where codeType=? and codeCode=?";
-		List listParam = new ArrayList();
-		listParam.add(codeType);
-		listParam.add(codeCode);
-		List list  = iCodeDao.findCode(hql, listParam);
-		if(list!=null && list.size()>0){
-			code = (Code)list.get(0);
-		}
-		
-		return code;
-	}
-
-
-
-
-
+    @Override
+    public Code findCodeName(String codeType, String codeCode) {
+        Code code = new Code();
+        String hql = " from Code where codeType=? and codeCode=?";
+        List<Object> listParam = new ArrayList<>();
+        listParam.add(codeType);
+        listParam.add(codeCode);
+        List list = iCodeDao.listCode(hql, listParam);
+        if (list != null && list.size() > 0) {
+            code = (Code) list.get(0);
+        }
+        return code;
+    }
 }

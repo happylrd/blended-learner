@@ -2,28 +2,24 @@ package com.buptsse.spm.dao;
 
 import java.util.List;
 
-import com.buptsse.spm.domain.Course;
 import com.buptsse.spm.domain.TradeInfo;
 
-
-/**
- * @author BUPT-TC
- * @param <T>
- * @date 2015年11月23日 下午2:46
- * @description	行业信息持久层接口定义
- * @modify BUPT-TC
- * @modifyDate 
- */
-
+// 行业信息持久层接口
 public interface ITradeInfoDao {
-	public boolean saveTradeInfo(TradeInfo tradeInfo);
-	public boolean updateTradeInfo(TradeInfo tradeInfo);
-	public boolean deleteTradeInfo(TradeInfo tradeInfo);
-	public List<TradeInfo> findTradeInfo(String hql,TradeInfo[] param);
-	public List<TradeInfo> findTradeInfo(String hql,List param);
-	public boolean saveOrUpdateTradeInfo(TradeInfo tradeInfo);
-	public Long countTradeInfo(String hql,List param);
-	public TradeInfo findTradeInfoById(Integer id);
-	
 
+    boolean saveTradeInfo(TradeInfo tradeInfo);
+
+    boolean updateTradeInfo(TradeInfo tradeInfo);
+
+    boolean removeTradeInfo(TradeInfo tradeInfo);
+
+    boolean saveOrUpdateTradeInfo(TradeInfo tradeInfo);
+
+    List<TradeInfo> listTradeInfo(String hql, Object[] param);
+
+    List<TradeInfo> listTradeInfo(String hql, List<Object> param);
+
+    TradeInfo getTradeInfoById(Integer id);
+
+    Long countTradeInfo(String hql, List<Object> param);
 }

@@ -2,28 +2,24 @@ package com.buptsse.spm.dao;
 
 import java.util.List;
 
-import com.buptsse.spm.domain.Course;
 import com.buptsse.spm.domain.TeachingPlan;
 
-
-/**
- * @author BUPT-TC
- * @param <T>
- * @date 2015年11月23日 下午2:46
- * @description	教案持久层接口定义
- * @modify BUPT-TC
- * @modifyDate 
- */
-
+// 教案持久层接口
 public interface ITeachingPlanDao {
-	public boolean saveTeachingPlan(TeachingPlan teachingPlan);
-	public boolean updateTeachingPlan(TeachingPlan teachingPlan);
-	public boolean deleteTeachingPlan(TeachingPlan teachingPlan);
-	public List<TeachingPlan> findTeachingPlan(String hql,TeachingPlan[] param);
-	public List<TeachingPlan> findTeachingPlan(String hql,List param);
-	public boolean saveOrUpdateTeachingPlan(TeachingPlan teachingPlan);
-	public Long countTeachingPlan(String hql,List param);
-	public TeachingPlan findTeachingPlanById(Integer id);
-	
 
+    boolean saveTeachingPlan(TeachingPlan teachingPlan);
+
+    boolean updateTeachingPlan(TeachingPlan teachingPlan);
+
+    boolean removeTeachingPlan(TeachingPlan teachingPlan);
+
+    boolean saveOrUpdateTeachingPlan(TeachingPlan teachingPlan);
+
+    List<TeachingPlan> listTeachingPlan(String hql, Object[] param);
+
+    List<TeachingPlan> listTeachingPlan(String hql, List<Object> param);
+
+    TeachingPlan getTeachingPlanById(Integer id);
+
+    Long countTeachingPlan(String hql, List<Object> param);
 }

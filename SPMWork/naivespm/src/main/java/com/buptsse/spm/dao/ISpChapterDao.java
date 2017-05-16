@@ -2,30 +2,26 @@ package com.buptsse.spm.dao;
 
 import java.util.List;
 
-import com.buptsse.spm.domain.Course;
 import com.buptsse.spm.domain.SpChapter;
 
-
-/**
- * @author BUPT-TC
- * @param <T>
- * @date 2015年11月23日 下午2:46
- * @description	视频教学持久层接口定义
- * @modify BUPT-TC
- * @modifyDate 
- */
-
+// 视频教学持久层接口
 public interface ISpChapterDao {
-	public boolean saveSpChapter(SpChapter spChapter);
-	public boolean updateSpChapter(SpChapter spChapter);
-	public boolean deleteSpChapter(SpChapter spChapter);
-	public List<SpChapter> findSpChapter(String hql,SpChapter[] param);
-	public List<SpChapter> findSpChapter(String hql,List param);
-	public boolean saveOrUpdateSpChapter(SpChapter spChapter);
-	public Long countSpChapter(String hql,List param);
-	public SpChapter findSpChapterById(Integer id);
-	
-	public List findSpChapterDetial(String hql);
-	
 
+    boolean saveSpChapter(SpChapter spChapter);
+
+    boolean updateSpChapter(SpChapter spChapter);
+
+    boolean removeSpChapter(SpChapter spChapter);
+
+    boolean saveOrUpdateSpChapter(SpChapter spChapter);
+
+    List<SpChapter> listSpChapter(String hql);
+
+    List<SpChapter> listSpChapter(String hql, Object[] param);
+
+    List<SpChapter> listSpChapter(String hql, List<Object> param);
+
+    SpChapter getSpChapterById(Integer id);
+
+    Long countSpChapter(String hql, List<Object> param);
 }

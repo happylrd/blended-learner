@@ -3,122 +3,85 @@ package com.buptsse.spm.dao.impl;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.hibernate.SQLQuery;
 import org.springframework.stereotype.Repository;
-
 import com.buptsse.spm.dao.ISpChapterDao;
 import com.buptsse.spm.domain.SpChapter;
 
-
-/**
- * @author BUPT-TC
- * @date 2015年11月28日 下午3:53:50
- * @description
- * @modify	BUPT-TC
- * @modifyDate 
- */
-
 @Repository
 public class SpChapterDaoImpl extends BaseDAOImpl<SpChapter> implements ISpChapterDao {
-	private static Logger LOG = Logger.getLogger(SpChapterDaoImpl.class);
 
+    private static Logger logger = Logger.getLogger(SpChapterDaoImpl.class);
 
-	@Override
-	public boolean saveSpChapter(SpChapter spChapter) {
-		// TODO Auto-generated method stub
-		try{
-			super.save(spChapter);
-		}catch(Exception e){
-			e.printStackTrace();
-			LOG.error(e);
-			return false;
-		}
-		return true;		
-	}
+    @Override
+    public boolean saveSpChapter(SpChapter spChapter) {
+        try {
+            super.save(spChapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e);
+            return false;
+        }
+        return true;
+    }
 
-	@Override
-	public boolean updateSpChapter(SpChapter spChapter) {
-		// TODO Auto-generated method stub
-		try{
-			super.update(spChapter);
-		}catch(Exception e){
-			e.printStackTrace();
-			LOG.error(e);
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean updateSpChapter(SpChapter spChapter) {
+        try {
+            super.update(spChapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e);
+            return false;
+        }
+        return true;
+    }
 
-	@Override
-	public boolean deleteSpChapter(SpChapter spChapter) {
-		// TODO Auto-generated method stub
-		try{
-			super.delete(spChapter);
-		}catch(Exception e){
-			e.printStackTrace();
-			LOG.error(e);
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean removeSpChapter(SpChapter spChapter) {
+        try {
+            super.remove(spChapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e);
+            return false;
+        }
+        return true;
+    }
 
+    @Override
+    public boolean saveOrUpdateSpChapter(SpChapter spChapter) {
+        try {
+            super.saveOrUpdate(spChapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e);
+            return false;
+        }
+        return true;
+    }
 
+    @Override
+    public List<SpChapter> listSpChapter(String hql) {
+        return super.list(hql);
+    }
 
-	@Override
-	public boolean saveOrUpdateSpChapter(SpChapter spChapter) {
-		// TODO Auto-generated method stub
-		try{
-			super.saveOrUpdate(spChapter);
-		}catch(Exception e){
-			e.printStackTrace();
-			LOG.error(e);
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public List<SpChapter> listSpChapter(String hql, Object[] param) {
+        return super.list(hql, param);
+    }
 
+    @Override
+    public List<SpChapter> listSpChapter(String hql, List<Object> param) {
+        return super.list(hql, param);
+    }
 
-	@Override
-	public List<SpChapter> findSpChapter(String hql, List param) {
-		// TODO Auto-generated method stub
-		SQLQuery sqlQuery = super.getSessionFactory().getCurrentSession().createSQLQuery(hql);
-		
-		return super.find(hql, param);
-		
-	}
+    @Override
+    public SpChapter getSpChapterById(Integer id) {
+        return super.get(SpChapter.class, id);
+    }
 
-	
-	@Override
-	public List findSpChapterDetial(String hql) {
-		// TODO Auto-generated method stub
-		SQLQuery sqlQuery = super.getSessionFactory().getCurrentSession().createSQLQuery(hql);
-		List list = sqlQuery.list();
-		return list;
-	}	
-	
-	
-	
-	@Override
-	public List<SpChapter> findSpChapter(String hql, SpChapter[] param) {
-		// TODO Auto-generated method stub
-		return super.find(hql, param);
-	}
-
-
-
-
-	@Override
-	public Long countSpChapter(String hql, List param) {
-		// TODO Auto-generated method stub
-		return super.count(hql, param);
-	}
-
-	
-	@Override
-	public SpChapter findSpChapterById(Integer id){
-		// TODO Auto-generated method stub
-		return super.get(SpChapter.class, id);
-		
-	}
-
+    @Override
+    public Long countSpChapter(String hql, List<Object> param) {
+        return super.count(hql, param);
+    }
 }

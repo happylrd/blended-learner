@@ -2,28 +2,24 @@ package com.buptsse.spm.dao;
 
 import java.util.List;
 
-import com.buptsse.spm.domain.Course;
 import com.buptsse.spm.domain.Message;
 
-
-/**
- * @author BUPT-TC
- * @param <T>
- * @date 2015年11月23日 下午2:46
- * @description	留言板持久层接口定义
- * @modify BUPT-TC
- * @modifyDate 
- */
-
+// 留言板持久层接口
 public interface IMessageDao {
-	public boolean saveMessage(Message message);
-	public boolean updateMessage(Message message);
-	public boolean deleteMessage(Message message);
-	public List<Message> findMessage(String hql,Message[] param);
-	public List<Message> findMessage(String hql,List param);
-	public boolean saveOrUpdateMessage(Message message);
-	public Long countMessage(String hql,List param);
-	public Message findMessageById(Integer id);
-	
 
+    boolean saveMessage(Message message);
+
+    boolean updateMessage(Message message);
+
+    boolean removeMessage(Message message);
+
+    boolean saveOrUpdateMessage(Message message);
+
+    List<Message> listMessage(String hql, Object[] param);
+
+    List<Message> listMessage(String hql, List<Object> param);
+
+    Message getMessageById(Integer id);
+
+    Long countMessage(String hql, List<Object> param);
 }
