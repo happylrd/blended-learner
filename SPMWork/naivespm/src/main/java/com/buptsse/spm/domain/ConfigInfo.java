@@ -1,81 +1,75 @@
 package com.buptsse.spm.domain;
 
 import java.io.Serializable;
+
 /**
- * 
- * @author BUPT-TC 
- * @date 2015年11月6日 下午9:45:15
- * @description ConfigInfo表的信息
- * @modify BUPT-TC
- * @modifyDate
+ * database don't have the table, but the class be used in the project
  */
-public class ConfigInfo implements Serializable{
-	private static final long serialVersionUID = 1L;
-	private int id;
-	private String configType;
-	private String configCode;
-	private String configValue;
-	private String configDesc;	
-	private String validate;		
-	private String remark;	
-	
+public class ConfigInfo implements Serializable {
 
-	public int getId() {
-		return id;
-	}
+    private static final long serialVersionUID = 1L;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    private int id;
+    private String configType;
+    private String configCode;
+    private String configValue;
+    private String configDesc;
+    private String validate;
+    private String remark;
 
-	public String getConfigType() {
-		return configType;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setConfigType(String configType) {
-		this.configType = configType;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getConfigCode() {
-		return configCode;
-	}
+    public String getConfigType() {
+        return configType;
+    }
 
-	public void setConfigCode(String configCode) {
-		this.configCode = configCode;
-	}
+    public void setConfigType(String configType) {
+        this.configType = configType;
+    }
 
-	public String getConfigValue() {
-		return configValue;
-	}
+    public String getConfigCode() {
+        return configCode;
+    }
 
-	public void setConfigValue(String configValue) {
-		this.configValue = configValue;
-	}
+    public void setConfigCode(String configCode) {
+        this.configCode = configCode;
+    }
 
-	public String getConfigDesc() {
-		return configDesc;
-	}
+    public String getConfigValue() {
+        return configValue;
+    }
 
-	public void setConfigDesc(String configDesc) {
-		this.configDesc = configDesc;
-	}
+    public void setConfigValue(String configValue) {
+        this.configValue = configValue;
+    }
 
-	public String getValidate() {
-		return validate;
-	}
+    public String getConfigDesc() {
+        return configDesc;
+    }
 
-	public void setValidate(String validate) {
-		this.validate = validate;
-	}
+    public void setConfigDesc(String configDesc) {
+        this.configDesc = configDesc;
+    }
 
-	public String getRemark() {
-		return remark;
-	}
+    public String getValidate() {
+        return validate;
+    }
 
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
+    public void setValidate(String validate) {
+        this.validate = validate;
+    }
 
+    public String getRemark() {
+        return remark;
+    }
 
-
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 }
