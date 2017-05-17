@@ -1,29 +1,14 @@
 package com.buptsse.spm.domain;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "schedule")
-@IdClass(SchedulePK.class)
-public class Schedule implements Serializable {
+public class SchedulePK implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @Column(name = "chapter_id", nullable = false)
     private int chapterId;
 
-    @Id
-    @Column(name = "video_step_order", nullable = false)
     private int videoStepOrder;
 
-    @Id
-    @Column(name = "userId", nullable = false, length = 45)
     private String userId;
-
-    @Column(name = "percent")
-    private int percent;
 
     public int getChapterId() {
         return chapterId;
@@ -49,11 +34,22 @@ public class Schedule implements Serializable {
         this.userId = userId;
     }
 
-    public int getPercent() {
-        return percent;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SchedulePK that = (SchedulePK) o;
+
+        return chapterId == that.chapterId && videoStepOrder == that.videoStepOrder
+                && (userId != null ? userId.equals(that.userId) : that.userId == null);
     }
 
-    public void setPercent(int percent) {
-        this.percent = percent;
+    @Override
+    public int hashCode() {
+        int result = chapterId;
+        result = 31 * result + videoStepOrder;
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        return result;
     }
 }

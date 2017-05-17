@@ -3,7 +3,8 @@ package com.buptsse.spm.domain;
 import java.io.Serializable;
 
 /**
- * database don't have the table, but the class be used in the project
+ * don't have the table to map.
+ * will be modified later
  */
 public class ConfigInfo implements Serializable {
 

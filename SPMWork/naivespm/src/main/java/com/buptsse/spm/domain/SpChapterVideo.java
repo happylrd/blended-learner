@@ -1,19 +1,39 @@
 package com.buptsse.spm.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "sp_chapter_video")
 public class SpChapterVideo implements Serializable {
 
+    @Id
+    @Column(name = "id", nullable = false, length = 32)
     private String id;
 
-    private int chapter_id;
-    private int video_time;
-    private String video_name_number;
-    private String video_name;
-    private String video_desc;
-    private String video_path;
-    private String video_pic;
-    private int video_step_order;
+    @Column(name = "chapter_id", nullable = false)
+    private int chapterId;
+
+    @Column(name = "video_time")
+    private int videoTime;
+
+    @Column(name = "video_name_number", length = 32)
+    private String videoNameNumber;
+
+    @Column(name = "video_name", length = 128)
+    private String videoName;
+
+    @Column(name = "video_desc", length = 512)
+    private String videoDesc;
+
+    @Column(name = "video_path", length = 512)
+    private String videoPath;
+
+    @Column(name = "video_pic", length = 512)
+    private String videoPic;
+
+    @Column(name = "video_step_order")
+    private int videoStepOrder;
 
     public String getId() {
         return id;
@@ -23,67 +43,67 @@ public class SpChapterVideo implements Serializable {
         this.id = id;
     }
 
-    public int getChapter_id() {
-        return chapter_id;
+    public int getChapterId() {
+        return chapterId;
     }
 
-    public void setChapter_id(int chapter_id) {
-        this.chapter_id = chapter_id;
+    public void setChapterId(int chapterId) {
+        this.chapterId = chapterId;
     }
 
-    public int getVideo_time() {
-        return video_time;
+    public int getVideoTime() {
+        return videoTime;
     }
 
-    public void setVideo_time(int video_time) {
-        this.video_time = video_time;
+    public void setVideoTime(int videoTime) {
+        this.videoTime = videoTime;
     }
 
-    public String getVideo_name_number() {
-        return video_name_number;
+    public String getVideoNameNumber() {
+        return videoNameNumber;
     }
 
-    public void setVideo_name_number(String video_name_number) {
-        this.video_name_number = video_name_number;
+    public void setVideoNameNumber(String videoNameNumber) {
+        this.videoNameNumber = videoNameNumber;
     }
 
-    public String getVideo_name() {
-        return video_name;
+    public String getVideoName() {
+        return videoName;
     }
 
-    public void setVideo_name(String video_name) {
-        this.video_name = video_name;
+    public void setVideoName(String videoName) {
+        this.videoName = videoName;
     }
 
-    public String getVideo_desc() {
-        return video_desc;
+    public String getVideoDesc() {
+        return videoDesc;
     }
 
-    public void setVideo_desc(String video_desc) {
-        this.video_desc = video_desc;
+    public void setVideoDesc(String videoDesc) {
+        this.videoDesc = videoDesc;
     }
 
-    public String getVideo_path() {
-        return video_path;
+    public String getVideoPath() {
+        return videoPath;
     }
 
-    public void setVideo_path(String video_path) {
-        this.video_path = video_path;
+    public void setVideoPath(String videoPath) {
+        this.videoPath = videoPath;
     }
 
-    public String getVideo_pic() {
-        return video_pic;
+    public String getVideoPic() {
+        return videoPic;
     }
 
-    public void setVideo_pic(String video_pic) {
-        this.video_pic = video_pic;
+    public void setVideoPic(String videoPic) {
+        this.videoPic = videoPic;
     }
 
-    public int getVideo_step_order() {
-        return video_step_order;
+    public int getVideoStepOrder() {
+        return videoStepOrder;
     }
 
-    public void setVideo_step_order(int video_step_order) {
-        this.video_step_order = video_step_order;
+    public void setVideoStepOrder(int videoStepOrder) {
+        this.videoStepOrder = videoStepOrder;
     }
 }

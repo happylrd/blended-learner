@@ -110,13 +110,13 @@ public class SpChapterAction extends ActionSupport{
 	public String findSpChapter() throws Exception{
 		
 		User user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
-		spChapterVideoList = spChapterVideoService.findSpChapterVideoByChapterId(spChapter.getChapter_id());
+		spChapterVideoList = spChapterVideoService.findSpChapterVideoByChapterId(spChapter.getChapterId());
 		
-		spChapterName = "第"+spChapter.getChapter_id()+"章 "+spChapter.getChapter_name();
+		spChapterName = "第"+spChapter.getChapterId()+"章 "+spChapter.getChapterName();
 		videoSize = spChapterVideoList.size();
 		//System.out.println("*****SpChapterList******:"+spChapterVideoList.size());
 		//获取进度
-		scheduleList = scheduleService.findScheduleByUserIdAndChapterId(spChapter.getChapter_id(), user.getUserId());
+		scheduleList = scheduleService.findScheduleByUserIdAndChapterId(spChapter.getChapterId(), user.getUserId());
 		
 		
 		return "success";

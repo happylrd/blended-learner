@@ -1,19 +1,39 @@
 package com.buptsse.spm.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "exam")
+@IdClass(ExamPK.class)
 public class Exam implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @Column(name = "examName", nullable = false, length = 50)
     private String examName;
+
+    @Id
+    @Column(name = "number", nullable = false)
     private int number;
 
+    @Column(name = "question", nullable = false, length = 500)
     private String question;
+
+    @Column(name = "answerA", length = 100)
     private String answerA;
+
+    @Column(name = "answerB", length = 100)
     private String answerB;
+
+    @Column(name = "answerC", length = 100)
     private String answerC;
+
+    @Column(name = "answerD", length = 100)
     private String answerD;
+
+    @Column(name = "answerRight", length = 2)
     private String answerRight;
 
     public String getExamName() {

@@ -1,17 +1,32 @@
 package com.buptsse.spm.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "code")
 public class Code implements Serializable {
 
-    // TODO: will be modified later
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue
+    @Column(name = "id", nullable = false)
     private int id;
+
+    @Column(name = "codeType", length = 50)
     private String codeType;
+
+    @Column(name = "codeCode", length = 50)
     private String codeCode;
+
+    @Column(name = "codeName", length = 50)
     private String codeName;
+
+    @Column(name = "validate", length = 1)
     private String validate;
+
+    @Column(name = "remark", length = 200)
     private String remark;
 
     public int getId() {

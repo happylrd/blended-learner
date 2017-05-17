@@ -1,17 +1,32 @@
 package com.buptsse.spm.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "teachingplan")
 public class TeachingPlan implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue
+    @Column(name = "id", nullable = false)
     private int id;
 
+    @Column(name = "pieceId")
     private String pieceId;
+
+    @Column(name = "pieceName", length = 45)
     private String pieceName;
+
+    @Column(name = "chapterId")
     private String chapterId;
+
+    @Column(name = "chapterName", length = 45)
     private String chapterName;
+
+    @Column(name = "filepath", length = 45)
     private String filePath;
 
     public int getId() {

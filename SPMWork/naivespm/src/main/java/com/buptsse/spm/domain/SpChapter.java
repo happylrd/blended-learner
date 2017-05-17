@@ -1,62 +1,76 @@
 package com.buptsse.spm.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "sp_chapter")
 public class SpChapter implements Serializable {
 
-    private int chapter_id;
+    @Id
+    @Column(name = "chapter_id", nullable = false)
+    private int chapterId;
 
-    private int chapter_name_number;
-    private String chapter_name;
-    private String chapter_desc;
-    private String chapter_pic;
-    private String chapter_courseware;
+    @Column(name = "chapter_name_number")
+    private int chapterNameNumber;
 
-    public int getChapter_id() {
-        return chapter_id;
+    @Column(name = "chapter_name", length = 64)
+    private String chapterName;
+
+    @Column(name = "chapter_desc", length = 256)
+    private String chapterDesc;
+
+    @Column(name = "chapter_pic", length = 256)
+    private String chapterPic;
+
+    @Column(name = "chapter_courseware", length = 256)
+    private String chapterCourseware;
+
+    public int getChapterId() {
+        return chapterId;
     }
 
-    public void setChapter_id(int chapter_id) {
-        this.chapter_id = chapter_id;
+    public void setChapterId(int chapterId) {
+        this.chapterId = chapterId;
     }
 
-    public int getChapter_name_number() {
-        return chapter_name_number;
+    public int getChapterNameNumber() {
+        return chapterNameNumber;
     }
 
-    public void setChapter_name_number(int chapter_name_number) {
-        this.chapter_name_number = chapter_name_number;
+    public void setChapterNameNumber(int chapterNameNumber) {
+        this.chapterNameNumber = chapterNameNumber;
     }
 
-    public String getChapter_name() {
-        return chapter_name;
+    public String getChapterName() {
+        return chapterName;
     }
 
-    public void setChapter_name(String chapter_name) {
-        this.chapter_name = chapter_name;
+    public void setChapterName(String chapterName) {
+        this.chapterName = chapterName;
     }
 
-    public String getChapter_desc() {
-        return chapter_desc;
+    public String getChapterDesc() {
+        return chapterDesc;
     }
 
-    public void setChapter_desc(String chapter_desc) {
-        this.chapter_desc = chapter_desc;
+    public void setChapterDesc(String chapterDesc) {
+        this.chapterDesc = chapterDesc;
     }
 
-    public String getChapter_pic() {
-        return chapter_pic;
+    public String getChapterPic() {
+        return chapterPic;
     }
 
-    public void setChapter_pic(String chapter_pic) {
-        this.chapter_pic = chapter_pic;
+    public void setChapterPic(String chapterPic) {
+        this.chapterPic = chapterPic;
     }
 
-    public String getChapter_courseware() {
-        return chapter_courseware;
+    public String getChapterCourseware() {
+        return chapterCourseware;
     }
 
-    public void setChapter_courseware(String chapter_courseware) {
-        this.chapter_courseware = chapter_courseware;
+    public void setChapterCourseware(String chapterCourseware) {
+        this.chapterCourseware = chapterCourseware;
     }
 }

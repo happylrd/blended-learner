@@ -116,7 +116,7 @@ public class CourseScheduleAction extends ActionSupport{
 	        int percent=percentList.get(0).getPercent();//取出当前的百分比
 	        
 	        System.out.println("percent:"+percent);
-	        int time=videoList.get(0).getVideo_time();//这个视频的时间
+	        int time=videoList.get(0).getVideoTime();//这个视频的时间
 	         System.out.println("time:"+time);		
 
 	         double temp=(time)*new Double(percent)/100;
@@ -140,9 +140,9 @@ public class CourseScheduleAction extends ActionSupport{
 	        // 更新Schedule表数据
 	        Schedule schedule = new Schedule();
 	        schedule.setPercent(nowTime);
-	        schedule.setUserid(user.getUserId());
-	        schedule.setVideo_step_order(watchCourseStep);
-	        schedule.setChapter_id(videoList.get(0).getChapter_id());
+	        schedule.setUserId(user.getUserId());
+	        schedule.setVideoStepOrder(watchCourseStep);
+	        schedule.setChapterId(videoList.get(0).getChapterId());
 			
 	        
 	        scheduleService.saveOrUpdate(schedule);
