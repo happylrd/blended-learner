@@ -81,9 +81,9 @@ public class EmailAction extends ActionSupport{
 		//emailFrom = "buptgogame@163.com";
 		//password = "buptgogame123";
 		ConfigInfo configInfo = new ConfigInfo();
-		configInfo = configInfoService.findByTypeAndCode("Email", "userName");
+		configInfo = configInfoService.getConfigInfoByTypeAndCode("Email", "userName");
 		emailFrom = configInfo.getConfigValue();
-		configInfo = configInfoService.findByTypeAndCode("Email", "passWord");
+		configInfo = configInfoService.getConfigInfoByTypeAndCode("Email", "passWord");
 		password = configInfo.getConfigValue();		
 		System.out.println("****************emailFrom**************:"+emailFrom+"*********password*************:"+password);
 		setEmailStyle();		
@@ -96,7 +96,7 @@ public class EmailAction extends ActionSupport{
 		try {
 			for (int i = 0; i < stuIdArray.length; i++) {
 				
-				Course course = selectCourseService.findCourse(stuIdArray[i]);
+				Course course = selectCourseService.getByStudentId(stuIdArray[i]);
 				
 				if(course.getFinalGrade().compareTo(new BigDecimal(60))==-1){
 					sendEmail("预警通知", course.getName()+"同学，您的成绩为"+course.getFinalGrade()+"分，请留意课程平台的补考相关通知。", course.getEmail());	

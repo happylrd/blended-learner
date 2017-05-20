@@ -20,17 +20,7 @@ public class SelectCourseServiceImpl implements ISelectCourseService {
     private ISelectCourseDao iSelectCourseDao;
 
     @Override
-    public Course findCourse(String studentId) {
-        Course course = new Course();
-        course = iSelectCourseDao.getCourse(studentId);
-        //if(course != null){
-        //	return course;
-        //}
-        return course;
-    }
-
-    @Override
-    public boolean insertCourse(Course course) {
+    public boolean saveCourse(Course course) {
         try {
             iSelectCourseDao.saveCourse(course);
         } catch (Exception e) {
@@ -41,52 +31,53 @@ public class SelectCourseServiceImpl implements ISelectCourseService {
         return true;
     }
 
+    @Override
     public boolean saveOrUpdate(Course course) {
         return iSelectCourseDao.saveOrUpdateCourse(course);
     }
 
     @Override
-    public boolean deleteCourse(String studentId) {
-        return false;
+    public Course getByStudentId(String studentId) {
+        return iSelectCourseDao.getCourse(studentId);
     }
 
     @Override
-    public boolean updateCourse(Course course) {
-        return false;
-    }
-
-    @Override
-    public List<Course> findAllCourse() {
-        return iSelectCourseDao.listCourse();
-    }
-
-    @Override
-    public List findPage(Map param, Integer page, Integer rows) {
-        System.out.println("$$$$$$$$进入service**查询");
-        String hql = "from Course where 1=1 ";
+    public List<Course> listByPage(Map param, Integer pageNum, Integer pageSize) {
+        StringBuilder hql = new StringBuilder("from Course where 1=1 ");
         List<Object> paramList = new ArrayList<>();
-        Iterator iter = param.keySet().iterator();
 
-        while (iter.hasNext()) {
-            String key = (String) iter.next();
+        for (Object keyItem : param.keySet()) {
+            String key = (String) keyItem;
             String value = (String) param.get(key);
-            System.out.println("&&&&&value&&&&:" + value);
             if (!"".equals(value)) {
-                hql += "and " + key + "=? ";
+                hql.append("and ").append(key).append("=? ");
                 paramList.add(value);
             }
         }
 
-        System.out.println("进入查询的Service:" + hql);
-        return iSelectCourseDao.listCourseByPage(hql, paramList, page, rows);
-        //return iSelectCourseDao.findAllCourse();
+        return iSelectCourseDao.listCourseByPage(hql.toString(), paramList, pageNum, pageSize);
+    }
+
+    @Override
+    public Long count(Map param) {
+        StringBuilder hql = new StringBuilder("select count(*) from Course where 1=1 ");
+        List<Object> paramList = new ArrayList<>();
+
+        for (Object keyItem : param.keySet()) {
+            String key = (String) keyItem;
+            String value = (String) param.get(key);
+            if (!"".equals(value)) {
+                hql.append("and ").append(key).append("=? ");
+                paramList.add(value);
+            }
+        }
+
+        return iSelectCourseDao.countCourse(hql.toString(), paramList);
     }
 
     @Override
     public boolean changeStatus(String studentId, int newStatus) {
-        Course course = new Course();
-        course = iSelectCourseDao.getCourse(studentId);
-        //if(preStutus == (newStatus - 1)){
+        Course course = iSelectCourseDao.getCourse(studentId);
         switch (newStatus) {
             case 1:
                 //course.setStatus("待确认");
@@ -110,32 +101,5 @@ public class SelectCourseServiceImpl implements ISelectCourseService {
                 break;
         }
         return true;
-        //}else{
-        //	return false;
-        //}
-    }
-
-    @Override
-    public boolean savaCourse(Course course) {
-        return false;
-    }
-
-    @Override
-    public Long count(Map param) {
-        String hql = "select count(*) from Course where 1=1 ";
-        List<Object> paramList = new ArrayList<>();
-        Iterator iter = param.keySet().iterator();
-
-        while (iter.hasNext()) {
-            String key = (String) iter.next();
-            String value = (String) param.get(key);
-            System.out.println("&&&&&value&&&&:" + value);
-            if (!"".equals(value)) {
-                hql += "and " + key + "=? ";
-                paramList.add(value);
-            }
-        }
-
-        return iSelectCourseDao.countCourse(hql, paramList);
     }
 }

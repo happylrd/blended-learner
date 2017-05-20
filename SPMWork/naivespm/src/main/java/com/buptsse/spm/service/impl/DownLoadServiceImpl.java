@@ -18,25 +18,13 @@ public class DownLoadServiceImpl implements IDownLoadService {
     private IDownLoadDao iDownLoadDao;
 
     @Override
-    public DownLoad findDownLoadById(String id) {
-        return iDownLoadDao.getDownLoadById(new Integer(id));
-    }
-
-    @Override
-    public boolean insertDownLoad(DownLoad downLoad) {
+    public boolean saveDownLoad(DownLoad downLoad) {
         return iDownLoadDao.saveDownLoad(downLoad);
     }
 
     @Override
-    public List<DownLoad> findAllDownLoad() {
-        String hql = "from DownLoad";
-        List<Object> list = new ArrayList<>();
-        return iDownLoadDao.listDownLoad(hql, list);
-    }
-
-    @Override
-    public boolean deleteDownLoad(String id) {
-        DownLoad downLoad = findDownLoadById(id);
+    public boolean removeDownLoad(String id) {
+        DownLoad downLoad = getDownLoadById(id);
         return iDownLoadDao.removeDownLoad(downLoad);
     }
 
@@ -45,11 +33,15 @@ public class DownLoadServiceImpl implements IDownLoadService {
         return false;
     }
 
-    public IDownLoadDao getiDownLoadDao() {
-        return iDownLoadDao;
+    @Override
+    public List<DownLoad> listDownLoad() {
+        String hql = "from DownLoad";
+        List<Object> list = new ArrayList<>();
+        return iDownLoadDao.listDownLoad(hql, list);
     }
 
-    public void setiDownLoadDao(IDownLoadDao iDownLoadDao) {
-        this.iDownLoadDao = iDownLoadDao;
+    @Override
+    public DownLoad getDownLoadById(String id) {
+        return iDownLoadDao.getDownLoadById(new Integer(id));
     }
 }

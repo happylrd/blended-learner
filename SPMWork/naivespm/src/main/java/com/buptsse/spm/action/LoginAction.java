@@ -35,12 +35,12 @@ public class LoginAction extends ActionSupport
 	 */
 	public String login()
 	{
-		LOG.error("username:" + user.getUserName());
+		LOG.error("username:" + user.getUsername());
 		
 		try
 		{
 			User tempuser = new User();
-			tempuser = userService.findUser(user.getUserName(),user.getPassword());
+			tempuser = userService.getByUsernameAndPassword(user.getUsername(),user.getPassword());
 			
 			Map session = (Map) ActionContext.getContext().getSession();
 			session.put("user", tempuser);

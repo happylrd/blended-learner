@@ -18,24 +18,12 @@ public class MessageServiceImpl implements IMessageService {
     private IMessageDao iMessageDao;
 
     @Override
-    public Message findMessageById(String id) {
-        return iMessageDao.getMessageById(new Integer(id));
-    }
-
-    @Override
-    public boolean insertMessage(Message message) {
+    public boolean saveMessage(Message message) {
         return iMessageDao.saveMessage(message);
     }
 
     @Override
-    public List<Message> findAllMessage() {
-        String hql = "from Message";
-        List<Object> list = new ArrayList<>();
-        return iMessageDao.listMessage(hql, list);
-    }
-
-    @Override
-    public boolean deleteMessage(Integer id) {
+    public boolean removeMessage(Integer id) {
         Message message = iMessageDao.getMessageById(id);
         return iMessageDao.removeMessage(message);
     }
@@ -45,11 +33,10 @@ public class MessageServiceImpl implements IMessageService {
         return false;
     }
 
-    public IMessageDao getiMessageDao() {
-        return iMessageDao;
-    }
-
-    public void setiMessageDao(IMessageDao iMessageDao) {
-        this.iMessageDao = iMessageDao;
+    @Override
+    public List<Message> listMessage() {
+        String hql = "from Message";
+        List<Object> list = new ArrayList<>();
+        return iMessageDao.listMessage(hql, list);
     }
 }

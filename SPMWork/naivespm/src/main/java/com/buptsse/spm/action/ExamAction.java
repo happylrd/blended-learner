@@ -47,7 +47,7 @@ public class ExamAction extends ActionSupport{
 	 */
 	public String findExamList() throws Exception{
 		
-		examList = examService.findAllExam();
+		examList = examService.listExam();
 		
 		Map paramMap = new HashMap();
 				
@@ -65,11 +65,11 @@ public class ExamAction extends ActionSupport{
 	public String addQuestion() throws Exception{
 		String msg = "";
 		
-		int number = examService.findExamMaxId(exam.getExamName());
+		int number = examService.getMaxNumberByExamName(exam.getExamName());
 		
 		System.out.println("最大编号："+number);
 		exam.setNumber(number+1);
-		boolean flag = examService.insertExam(exam);
+		boolean flag = examService.saveExam(exam);
 		//boolean flag = false;
 		if(flag){
 			msg = "1";//表示保存成功
@@ -95,7 +95,7 @@ public class ExamAction extends ActionSupport{
 	 */
 	public String queryQuestion(){
 		
-		examList = examService.findExamByName(examName);
+		examList = examService.listExamByName(examName);
 		if(examList!=null&&examList.size()>0){
 			Exam exam = (Exam) examList.get(0);
 			examName =exam.getExamName();
@@ -112,7 +112,7 @@ public class ExamAction extends ActionSupport{
 	 */
 	public String checkAnswer(){
 		String yourAnswer ="";
-		examList = examService.findExamByName(examName);
+		examList = examService.listExamByName(examName);
 		for(int i=0;i<examList.size();i++){
 			Exam exam = (Exam) examList.get(i);
 			if(exam.getAnswerRight().equals(result[i])){
@@ -133,10 +133,10 @@ public class ExamAction extends ActionSupport{
 	public String deleteExam(){
 		boolean flag=false;
 		String msg="";
-		examList = examService.findExamByName(examName);
+		examList = examService.listExamByName(examName);
 		for(int i=0;i<examList.size();i++){
 			Exam exam = (Exam) examList.get(i);
-			flag = examService.deleteExam(exam.getExamName(), exam.getNumber());
+			flag = examService.removeExam(exam.getExamName(), exam.getNumber());
 			if(!flag){
 				break;
 			}
@@ -168,7 +168,7 @@ public class ExamAction extends ActionSupport{
 		boolean flag=false;
 		String msg="";
 		
-		flag = examService.deleteExam(examName, new Integer(number));
+		flag = examService.removeExam(examName, new Integer(number));
 
 		if(flag){
 			msg = "删除成功！";//表示删除成功

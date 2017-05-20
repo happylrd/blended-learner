@@ -109,9 +109,9 @@ public class CourseScheduleAction extends ActionSupport{
 			
 			user.setVideoTime(yourTime);
 			
-			List<SpChapterVideo> videoList = spChapterVideoService.findSpChapterVideoByStepOrder(watchCourseStep);
+			List<SpChapterVideo> videoList = spChapterVideoService.listByStepOrder(watchCourseStep);
 			
-			List<Schedule> percentList = scheduleService.findScheduleByUserIdAndStepOrder(watchCourseStep, user.getUserId());
+			List<Schedule> percentList = scheduleService.listByStepOrderAndUserId(watchCourseStep, user.getUserId());
 			
 	        int percent=percentList.get(0).getPercent();//取出当前的百分比
 	        

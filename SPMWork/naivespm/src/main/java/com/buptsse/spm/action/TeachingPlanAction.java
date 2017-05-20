@@ -62,7 +62,7 @@ public class TeachingPlanAction extends ActionSupport{
 	 */
 	public String findTeachingPlanList() throws Exception{
 		
-		pieceList = teachingPlanService.findAllPiece();
+		pieceList = teachingPlanService.listTeachingPlan();
 		//teachingPlanList = teachingPlanService.findAllTeachingPlan();
 		
 		return "success";
@@ -79,7 +79,7 @@ public class TeachingPlanAction extends ActionSupport{
 		
 		String msg = "";
 		
-		boolean flag = teachingPlanService.deleteTeachingPlan(teachingPlan.getId());
+		boolean flag = teachingPlanService.removeTeachingPlan(teachingPlan.getId());
 		if(flag){
 			msg = "删除成功！";//表示删除成功
 		}else{
@@ -157,7 +157,7 @@ public class TeachingPlanAction extends ActionSupport{
 		
 		//设置文件下载路径
 		teachingPlan.setFilePath("/download/"+teachingPlan.getFilePath());	
-		boolean flag = teachingPlanService.insertTeachingPlan(teachingPlan);
+		boolean flag = teachingPlanService.saveTeachingPlan(teachingPlan);
 
 		
 		if(flag&&"1".equals(msg)){

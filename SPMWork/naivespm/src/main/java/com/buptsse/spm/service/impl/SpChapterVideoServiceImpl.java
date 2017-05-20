@@ -18,51 +18,23 @@ public class SpChapterVideoServiceImpl implements ISpChapterVideoService {
     private ISpChapterVideoDao iSpChapterVideoDao;
 
     @Override
-    public SpChapterVideo findSpChapterVideoById(String id) {
-        return iSpChapterVideoDao.getSpChapterVideoById(new Integer(id));
+    public boolean saveOrUpdate(SpChapterVideo SpChapterVideo) {
+        return false;
     }
 
-    public List<SpChapterVideo> findSpChapterVideoByChapterId(Integer chapterId) {
+    @Override
+    public List<SpChapterVideo> listByChapterId(Integer chapterId) {
         String hql = "from SpChapterVideo where chapter_id=? ";
         List<Object> listParam = new ArrayList<>();
         listParam.add(chapterId);
         return iSpChapterVideoDao.listSpChapterVideo(hql, listParam);
     }
 
-    public List<SpChapterVideo> findSpChapterVideoByStepOrder(Integer stepOrder) {
+    @Override
+    public List<SpChapterVideo> listByStepOrder(Integer stepOrder) {
         String hql = "from SpChapterVideo where video_step_order=? ";
         List<Object> listParam = new ArrayList<>();
         listParam.add(stepOrder);
         return iSpChapterVideoDao.listSpChapterVideo(hql, listParam);
-    }
-
-    @Override
-    public boolean insertSpChapterVideo(SpChapterVideo SpChapterVideo) {
-        return iSpChapterVideoDao.saveSpChapterVideo(SpChapterVideo);
-    }
-
-    @Override
-    public List<SpChapterVideo> findAllSpChapterVideo() {
-        String hql = "from SpChapterVideo";
-        List<Object> list = new ArrayList<>();
-        return iSpChapterVideoDao.listSpChapterVideo(hql, list);
-    }
-
-    @Override
-    public boolean deleteSpChapterVideo(String id) {
-        return false;
-    }
-
-    @Override
-    public boolean saveOrUpdate(SpChapterVideo SpChapterVideo) {
-        return false;
-    }
-
-    public ISpChapterVideoDao getiSpChapterVideoDao() {
-        return iSpChapterVideoDao;
-    }
-
-    public void setiSpChapterVideoDao(ISpChapterVideoDao iSpChapterVideoDao) {
-        this.iSpChapterVideoDao = iSpChapterVideoDao;
     }
 }

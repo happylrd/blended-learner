@@ -46,7 +46,7 @@ public class MessageAction extends ActionSupport{
 	 */
 	public String findMessageList() throws Exception{
 		
-		messageList = messageService.findAllMessage();
+		messageList = messageService.listMessage();
 		
 		return "success";
 	}	
@@ -58,7 +58,7 @@ public class MessageAction extends ActionSupport{
 	 */
 	public String insertMessage() throws Exception{
 		String msg = "";
-		boolean flag = messageService.insertMessage(message);
+		boolean flag = messageService.saveMessage(message);
 		if(flag){
 			msg = "1";//表示保存成功
 		}else{
@@ -85,7 +85,7 @@ public class MessageAction extends ActionSupport{
 	public String deleteMessage() throws Exception{
 		String msg = "";
 		
-		boolean flag = messageService.deleteMessage(message.getId());
+		boolean flag = messageService.removeMessage(message.getId());
 		
 		if(flag){
 			msg = "删除成功";//表示保存成功

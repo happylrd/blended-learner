@@ -73,7 +73,7 @@ public class SpChapterAction extends ActionSupport{
 		
 		
 		User user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
-		spChapterList = spChapterService.findSpChapterDetial();
+		spChapterList = spChapterService.listSpChapterDetail();
 		
 		int averageTotal=0;
 		//for(SpChapter spChapter:spChapterList){
@@ -83,7 +83,7 @@ public class SpChapterAction extends ActionSupport{
 			
 			int sumValueTotal=0;
 			int k=0;
-			List<Schedule> scheduleListtmp = scheduleService.findScheduleByUserIdAndChapterId(Integer.parseInt(spchapter[0].toString()), user.getUserId());
+			List<Schedule> scheduleListtmp = scheduleService.listByChapterIdAndUserId(Integer.parseInt(spchapter[0].toString()), user.getUserId());
 			for(Schedule schedule:scheduleListtmp){
 				sumValueTotal+=schedule.getPercent();
 				k++;
@@ -110,13 +110,13 @@ public class SpChapterAction extends ActionSupport{
 	public String findSpChapter() throws Exception{
 		
 		User user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
-		spChapterVideoList = spChapterVideoService.findSpChapterVideoByChapterId(spChapter.getChapterId());
+		spChapterVideoList = spChapterVideoService.listByChapterId(spChapter.getChapterId());
 		
 		spChapterName = "第"+spChapter.getChapterId()+"章 "+spChapter.getChapterName();
 		videoSize = spChapterVideoList.size();
 		//System.out.println("*****SpChapterList******:"+spChapterVideoList.size());
 		//获取进度
-		scheduleList = scheduleService.findScheduleByUserIdAndChapterId(spChapter.getChapterId(), user.getUserId());
+		scheduleList = scheduleService.listByChapterIdAndUserId(spChapter.getChapterId(), user.getUserId());
 		
 		
 		return "success";

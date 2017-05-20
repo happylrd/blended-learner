@@ -10,9 +10,10 @@
 1.1.0 | 重构为 基于IDEA的 maven构建的 项目
 ~     | 重构domain层（用 *基于注解的配置* 替换 *基于XML的配置*，规范domain层命名）
 ~     | 重构dao层（规范dao层命名）
+~     | 重构service层（规范service层命名）
 
 ## 附录
 
-[SPM项目需求](./docs/spm-requirement.md)
-[SPM项目分析](./docs/spm-analysis.md)
-[编码风格](./docs/code-style.md)
+- [SPM项目需求](./docs/spm-requirement.md)
+- [SPM项目分析](./docs/spm-analysis.md)
+- [编码风格](./docs/code-style.md)

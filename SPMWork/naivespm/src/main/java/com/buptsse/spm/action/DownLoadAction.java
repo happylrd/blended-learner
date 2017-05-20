@@ -3,36 +3,24 @@ package com.buptsse.spm.action;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-
 import com.buptsse.spm.domain.DownLoad;
 import com.buptsse.spm.service.IDownLoadService;
-
 import com.opensymphony.xwork2.ActionSupport;
 
-
-/**
- * @author BUPT-TC
- * @date 2015年11月01日 下午4:17
- * @description 选课的service层接口定义 
- * @modify BUPT-TC
- * @modifyDate 
- */
 public class DownLoadAction extends ActionSupport{
 
 	private static final long serialVersionUID = 1L;
+
 	private static Logger LOG = LoggerFactory.getLogger(DownLoadAction.class);
+
 	@Resource
 	private IDownLoadService downLoadService;
 	
@@ -49,16 +37,13 @@ public class DownLoadAction extends ActionSupport{
 	// 上传文件名集合
 	private List<String> fileFileName;	
 
-
-
-
 	/**
 	 * 查询所有可下载信息列表
 	 * @return
 	 * @throws Exception
 	 */
 	public String findDownLoadList() throws Exception{
-		downLoadList = downLoadService.findAllDownLoad();
+		downLoadList = downLoadService.listDownLoad();
 		return "success";
 	}	
 
@@ -117,8 +102,8 @@ public class DownLoadAction extends ActionSupport{
 		ServletActionContext.getResponse().getWriter().write(msg);
 		
 		downLoad.setFilePath("/download/"+downLoad.getFilePath());
-		boolean flag = downLoadService.insertDownLoad(downLoad);
-		downLoadList = downLoadService.findAllDownLoad();
+		boolean flag = downLoadService.saveDownLoad(downLoad);
+		downLoadList = downLoadService.listDownLoad();
 
 
 		return null;
@@ -132,8 +117,8 @@ public class DownLoadAction extends ActionSupport{
 	 * @throws Exception
 	 */
 	public String deleteDownLoad() throws Exception{
-		boolean flag = downLoadService.deleteDownLoad(id);
-		downLoadList = downLoadService.findAllDownLoad();
+		boolean flag = downLoadService.removeDownLoad(id);
+		downLoadList = downLoadService.listDownLoad();
 		if(flag){
 			return "success";
 		}else{

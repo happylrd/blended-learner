@@ -49,7 +49,7 @@ public class UserDaoImpl extends BaseDAOImpl<User> implements IUserDao {
     }
 
     @Override
-    public List listUserByPage(String hql, List<Object> param, Integer pageNum, Integer pageSize) {
+    public List<User> listUserByPage(String hql, List<Object> param, Integer pageNum, Integer pageSize) {
         return super.list(hql, param, pageNum, pageSize);
     }
 
@@ -58,7 +58,7 @@ public class UserDaoImpl extends BaseDAOImpl<User> implements IUserDao {
         // TODO: will be modified with hql
         List<User> userList = super.list("from User");
         for (User userItem : userList) {
-            if (user.getUserName().equals(userItem.getUserName())) {
+            if (user.getUsername().equals(userItem.getUsername())) {
                 return userItem;
             }
         }

@@ -18,24 +18,7 @@ public class ConfigInfoServiceImpl implements IConfigInfoService {
     private IConfigInfoDao iConfigInfoDao;
 
     @Override
-    public ConfigInfo findConfigInfoById(String id) {
-        return iConfigInfoDao.getConfigInfoById(new Integer(id));
-    }
-
-    @Override
-    public boolean insertConfigInfo(ConfigInfo configInfo) {
-        return iConfigInfoDao.saveConfigInfo(configInfo);
-    }
-
-    @Override
-    public List<ConfigInfo> findAllConfigInfo() {
-        String hql = "from ConfigInfo";
-        List<Object> list = new ArrayList<>();
-        return iConfigInfoDao.listConfigInfo(hql, list);
-    }
-
-    @Override
-    public boolean deleteConfigInfo(Integer id) {
+    public boolean removeConfigInfo(Integer id) {
         ConfigInfo ConfigInfo = iConfigInfoDao.getConfigInfoById(id);
         return iConfigInfoDao.removeConfigInfo(ConfigInfo);
     }
@@ -45,24 +28,22 @@ public class ConfigInfoServiceImpl implements IConfigInfoService {
         return iConfigInfoDao.saveOrUpdateConfigInfo(configInfo);
     }
 
-    public IConfigInfoDao getiConfigInfoDao() {
-        return iConfigInfoDao;
-    }
-
-    public void setiConfigInfoDao(IConfigInfoDao iConfigInfoDao) {
-        this.iConfigInfoDao = iConfigInfoDao;
+    @Override
+    public List<ConfigInfo> listConfigInfo() {
+        String hql = "from ConfigInfo";
+        List<Object> list = new ArrayList<>();
+        return iConfigInfoDao.listConfigInfo(hql, list);
     }
 
     @Override
-    public ConfigInfo findByTypeAndCode(String configType, String configValue) {
+    public ConfigInfo getConfigInfoByTypeAndCode(String configType, String configValue) {
         String hql = "from ConfigInfo where validate='1' and configType=? and configCode=? ";
         List<Object> list = new ArrayList<>();
         list.add(configType);
         list.add(configValue);
-        List resultList = new ArrayList();
-        resultList = iConfigInfoDao.listConfigInfo(hql, list);
+        List<ConfigInfo> resultList = iConfigInfoDao.listConfigInfo(hql, list);
         if (resultList != null && resultList.size() > 0) {
-            return (ConfigInfo) resultList.get(0);
+            return resultList.get(0);
         } else {
             return new ConfigInfo();
         }

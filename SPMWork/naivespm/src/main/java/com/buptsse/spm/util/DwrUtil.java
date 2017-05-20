@@ -38,7 +38,7 @@ public class DwrUtil {
             return "账号或密码未输入！";
         }
         try {
-            if (userService.findUser(userName, passwWord) == null) {
+            if (userService.getByUsernameAndPassword(userName, passwWord) == null) {
                 //ServletActionContext.getRequest().setAttribute("loginMsg", "对不起，该用户不存在或密码输入错误！");
                 return "对不起，该用户不存在或密码输入错误！";
             } else {
@@ -66,7 +66,7 @@ public class DwrUtil {
                 System.out.println("用户名应为10位学号");
                 return "用户名应为10位数字";
             } else {
-                if (userService.findUser(userName) != null) {
+                if (userService.getByUsername(userName) != null) {
                     System.out.println("用户已存在，请重新输入");
                     return "extence";
                 } else {

@@ -5,7 +5,7 @@
 ## Task List
 
 - [ ] action
-- [ ] service
+- [x] service
 - [x] dao
 - [x] domain
 - [x] filter
@@ -54,6 +54,11 @@
 `dao`改进
 
 规范`dao`层代码
+
+`service`改进
+
+规范`service`层代码
+
 
 ## 数据库设计（original, ugly）
 

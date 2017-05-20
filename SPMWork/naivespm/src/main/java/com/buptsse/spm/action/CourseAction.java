@@ -67,10 +67,10 @@ public class CourseAction extends ActionSupport{
 		paramMap.put("status", status);
 		paramMap.put("syear", syear);
 		
-		List<Course> list = selectCourseService.findPage(paramMap,page, rows);
+		List<Course> list = selectCourseService.listByPage(paramMap,page, rows);
 		
 		for(Course course:list){
-			Code code =  codeService.findCodeName("status", course.getStatus());
+			Code code =  codeService.getCodeByTypeAndCode("status", course.getStatus());
 			String codeName =code.getCodeName();
 			course.setStatus(codeName);
 		}
@@ -157,7 +157,7 @@ public class CourseAction extends ActionSupport{
 	 */
 	public String insertCourse(){
 		Map<String, Object> map=new HashMap<String, Object>();
-		Course courseExit = selectCourseService.findCourse(course.getStudentId());
+		Course courseExit = selectCourseService.getByStudentId(course.getStudentId());
 		if(courseExit!=null){
 			map.put("code", "2");
 			map.put("message", "学号为"+course.getStudentId()+"的学生已选课成功，请勿重复选课！");			
@@ -166,7 +166,7 @@ public class CourseAction extends ActionSupport{
 			course.setStatus("1");
 			boolean flag=false;
 			try{
-				flag = selectCourseService.insertCourse(course);
+				flag = selectCourseService.saveCourse(course);
 			}catch(Exception e){
 				e.printStackTrace();
 				flag=false;

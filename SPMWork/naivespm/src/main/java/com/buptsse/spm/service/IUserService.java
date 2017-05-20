@@ -2,21 +2,21 @@ package com.buptsse.spm.service;
 
 import java.util.List;
 import java.util.Map;
-
 import com.buptsse.spm.domain.User;
 
 public interface IUserService {
-    User findUser(String userName, String password);
 
-    User findUser(String userName);
-
-    boolean deleteUser(String id);
-
-    boolean addUser(User user);
+    boolean saveUser(User user);
 
     boolean updateUser(User user);
 
-    List findPage(Map param, Integer page, Integer rows);
+    boolean removeUser(String id);
+
+    List<User> listUserByPage(Map param, Integer page, Integer rows);
+
+    User getByUsername(String username);
+
+    User getByUsernameAndPassword(String username, String password);
 
     Long count(Map param);
 }

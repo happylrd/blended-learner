@@ -18,27 +18,12 @@ public class BasicInfoServiceImpl implements IBasicInfoService {
     private IBasicInfoDao iBasicInfoDao;
 
     @Override
-    public boolean insertBasicInfo(BasicInfo basicInfo) {
-        return iBasicInfoDao.saveBasicInfo(basicInfo);
-    }
-
-    @Override
-    public boolean deleteBasicInfo(String id) {
-        return false;
-    }
-
-    @Override
     public boolean saveOrUpdate(BasicInfo basicInfo) {
         return iBasicInfoDao.saveOrUpdateBasicInfo(basicInfo);
     }
 
     @Override
-    public BasicInfo findBasicInfoById(String id) {
-        return iBasicInfoDao.getBasicInfoById(new Integer(id));
-    }
-
-    @Override
-    public BasicInfo findBasicInfoByName(String name) {
+    public BasicInfo getBasicInfoByName(String name) {
         String hql = " from BasicInfo where name=?";
         List<Object> listParm = new ArrayList<>();
         listParm.add(name);
@@ -48,13 +33,5 @@ public class BasicInfoServiceImpl implements IBasicInfoService {
         } else {
             return null;
         }
-        //return iBasicInfoDao.findBasicInfoById(new Integer(id));
-    }
-
-    @Override
-    public List<BasicInfo> findAllBasicInfo() {
-        String hql = "from BasicInfo";
-        List<Object> list = new ArrayList<>();
-        return iBasicInfoDao.listBasicInfo(hql, list);
     }
 }

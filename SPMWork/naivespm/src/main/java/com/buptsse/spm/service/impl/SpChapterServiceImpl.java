@@ -1,6 +1,5 @@
 package com.buptsse.spm.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
@@ -18,57 +17,18 @@ public class SpChapterServiceImpl implements ISpChapterService {
     private ISpChapterDao iSpChapterDao;
 
     @Override
-    public SpChapter findSpChapterById(String id) {
-        return iSpChapterDao.getSpChapterById(new Integer(id));
+    public boolean saveOrUpdate(SpChapter spChapter) {
+        return false;
     }
 
     @Override
-    public boolean insertSpChapter(SpChapter spChapter) {
-        return iSpChapterDao.saveSpChapter(spChapter);
-    }
-
-    @Override
-    public List<SpChapter> findAllSpChapter() {
-        String hql = "from SpChapter";
-        List<Object> list = new ArrayList<>();
-        return iSpChapterDao.listSpChapter(hql, list);
-    }
-
-    @Override
-    public List findSpChapterDetial() {
+    public List<SpChapter> listSpChapterDetail() {
         String hql = "SELECT c.chapter_id,c.chapter_name_number,c.chapter_name,c.chapter_pic,c.chapter_desc,"
                 + "SUM(cv.video_time) as sum_time,count(*) as video_size "
                 + "FROM sp_chapter c,sp_chapter_video cv WHERE c.chapter_id = cv.chapter_id "
                 + "GROUP BY c.chapter_id,c.chapter_name_number,c.chapter_name,c.chapter_pic,c.chapter_desc "
                 + "ORDER BY c.chapter_name_number";
 
-        System.out.println("hql:" + hql);
-
-        List list = new ArrayList();
-
-        //List resultList = iSpChapterDao.findSpChapter(hql, list);
-        List resultList = iSpChapterDao.listSpChapter(hql);
-        //iSpChapterDao.findSpChapterDetial(hql);
-        System.out.println("**resultList***:" + resultList.size());
-
-        return resultList;
-    }
-
-    @Override
-    public boolean deleteSpChapter(String id) {
-        return false;
-    }
-
-    @Override
-    public boolean saveOrUpdate(SpChapter spChapter) {
-        return false;
-    }
-
-    public ISpChapterDao getiSpChapterDao() {
-        return iSpChapterDao;
-    }
-
-    public void setiSpChapterDao(ISpChapterDao iSpChapterDao) {
-        this.iSpChapterDao = iSpChapterDao;
+        return iSpChapterDao.listSpChapter(hql);
     }
 }

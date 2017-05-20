@@ -49,19 +49,19 @@ public class RegisterAction extends ActionSupport {
 	 */
 	public String register() {
 		String msg="";
-		LOG.error("username:" + user.getUserName());
+		LOG.error("username:" + user.getUsername());
 		if (user == null){
 			LOG.error("USER对象为空！");
 		}
-		if (StringUtils.isBlank(user.getUserName()) || StringUtils.isBlank(user.getPassword())){
+		if (StringUtils.isBlank(user.getUsername()) || StringUtils.isBlank(user.getPassword())){
 			msg = "用户名或密码未输入,请输入用户名或密码！";
 		}else{
 			LOG.error("开始保存数据");
 			if(user.getPassword().equals(user.getPassword1())){
-				user.setUserId(user.getUserName());
-				user.setId(user.getUserName());
+				user.setUserId(user.getUsername());
+				user.setId(user.getUsername());
 				user.setPosition("3");
-				userService.addUser(user);
+				userService.saveUser(user);
 				msg = "恭喜您，注册成功！";
 				LOG.error("保存数据");
 				//ServletActionContext.getRequest().setAttribute("registerMsg", "注册成功！");
@@ -97,10 +97,10 @@ public class RegisterAction extends ActionSupport {
 		paramMap.put("userName", userName);
 		paramMap.put("position", position);
 
-		List<User> list = userService.findPage(paramMap,page, rows);
+		List<User> list = userService.listUserByPage(paramMap,page, rows);
 		
 		for(User user:list){
-			Code code =  codeService.findCodeName("position", user.getPosition());
+			Code code =  codeService.getCodeByTypeAndCode("position", user.getPosition());
 			String codeName =code.getCodeName();
 			user.setPosition(codeName);
 		}
@@ -142,7 +142,7 @@ public class RegisterAction extends ActionSupport {
 		for (int i = 0; i < ids.length; i++) { 
 			//将已确认的删除
 			try {
-				result = userService.deleteUser(ids[i]);
+				result = userService.removeUser(ids[i]);
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
@@ -184,7 +184,7 @@ public class RegisterAction extends ActionSupport {
 		Map<String, Object> map=new HashMap<String, Object>();
 		
 		try {
-			result = userService.addUser(user);
+			result = userService.saveUser(user);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

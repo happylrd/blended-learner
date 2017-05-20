@@ -47,7 +47,7 @@ public class TradeInfoAction extends ActionSupport{
 	 */
 	public String findTradeInfoList() throws Exception{
 		
-		tradeInfoList = tradeInfoService.findAllTradeInfo();
+		tradeInfoList = tradeInfoService.listTradeInfo();
 		
 		return "success";
 	}	
@@ -60,7 +60,7 @@ public class TradeInfoAction extends ActionSupport{
 	 */
 	public String findTradeInfo() throws Exception{
 		
-		tradeInfo = tradeInfoService.findTradeInfoById(idTradeInfo);
+		tradeInfo = tradeInfoService.getTradeInfoById(idTradeInfo);
 		
 		return "success";
 	}		
@@ -74,7 +74,7 @@ public class TradeInfoAction extends ActionSupport{
 	public String insertTradeInfo() throws Exception{
 		String msg = "";
 		
-		boolean flag = tradeInfoService.insertTradeInfo(tradeInfo);
+		boolean flag = tradeInfoService.saveTradeInfo(tradeInfo);
 		if(flag){
 			msg = "1";//表示保存成功
 		}else{

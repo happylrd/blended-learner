@@ -18,12 +18,7 @@ public class CodeServiceImpl implements ICodeService {
     private ICodeDao iCodeDao;
 
     @Override
-    public Code findCodeById(String id) {
-        return iCodeDao.getCodeById(new Integer(id));
-    }
-
-    @Override
-    public Code findCodeName(String codeType, String codeCode) {
+    public Code getCodeByTypeAndCode(String codeType, String codeCode) {
         Code code = new Code();
         String hql = " from Code where codeType=? and codeCode=?";
         List<Object> listParam = new ArrayList<>();

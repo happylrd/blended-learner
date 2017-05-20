@@ -62,7 +62,7 @@ public class ConfigInfoAction extends ActionSupport{
 	 */
 	public String findConfigInfoList() throws Exception{
 		
-		configInfoList = configInfoService.findAllConfigInfo();
+		configInfoList = configInfoService.listConfigInfo();
 		
 		String str=JSONObject.toJSONString(configInfoList);
 		System.out.println("后台输出的json为："+str);
@@ -132,7 +132,7 @@ public class ConfigInfoAction extends ActionSupport{
 	public String deleteConfigInfo() throws Exception{
 		String msg = "";
 		
-		boolean flag = configInfoService.deleteConfigInfo(configInfo.getId());
+		boolean flag = configInfoService.removeConfigInfo(configInfo.getId());
 		
 		if(flag){
 			msg = "删除成功";//表示保存成功

@@ -12,7 +12,7 @@ public interface IUserDao {
 
     boolean removeUser(User user);
 
-    List listUserByPage(String hql, List<Object> param, Integer pageNum, Integer pageSize);
+    List<User> listUserByPage(String hql, List<Object> param, Integer pageNum, Integer pageSize);
 
     User getUser(User user);
 

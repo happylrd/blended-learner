@@ -1,7 +1,6 @@
 package com.buptsse.spm.service.impl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
@@ -20,38 +19,7 @@ public class UserServiceImpl implements IUserService {
     private IUserDao iUserDao;
 
     @Override
-    public User findUser(String userName, String password) {
-        User user = new User();
-        user.setUserName(userName);
-        user.setPassword(password);
-        user = iUserDao.getUser(user);
-        if (user == null || !user.getPassword().equals(password)) {
-            return null;
-        } else {
-            return user;
-        }
-    }
-
-    public User findUser(String userName) {
-        User user = new User();
-        user.setUserName(userName);
-        user.setId(userName);
-        user = iUserDao.getUser(user);
-        if (user == null) {
-            return null;
-        } else {
-            return user;
-        }
-    }
-
-    @Override
-    public boolean deleteUser(String id) {
-        User user = iUserDao.getUserById(id);
-        return iUserDao.removeUser(user);
-    }
-
-    @Override
-    public boolean addUser(User user) {
+    public boolean saveUser(User user) {
         return iUserDao.saveUser(user);
     }
 
@@ -61,38 +29,67 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List findPage(Map param, Integer page, Integer rows) {
-        String hql = "from User where 1=1 ";
-        List<Object> paramList = new ArrayList<>();
-        Iterator iter = param.keySet().iterator();
+    public boolean removeUser(String id) {
+        User user = iUserDao.getUserById(id);
+        return iUserDao.removeUser(user);
+    }
 
-        while (iter.hasNext()) {
-            String key = (String) iter.next();
+    @Override
+    public List<User> listUserByPage(Map param, Integer pageNum, Integer pageSize) {
+        StringBuilder hql = new StringBuilder("from User where 1=1 ");
+        List<Object> paramList = new ArrayList<>();
+
+        for (Object keyItem : param.keySet()) {
+            String key = (String) keyItem;
             String value = (String) param.get(key);
             if (!"".equals(value)) {
-                hql += "and " + key + "=? ";
+                hql.append("and ").append(key).append("=? ");
                 paramList.add(value);
             }
         }
 
-        return iUserDao.listUserByPage(hql, paramList, page, rows);
+        return iUserDao.listUserByPage(hql.toString(), paramList, pageNum, pageSize);
+    }
+
+    @Override
+    public User getByUsername(String username) {
+        User user = new User();
+        user.setUsername(username);
+        user.setId(username);
+        user = iUserDao.getUser(user);
+        if (user == null) {
+            return null;
+        } else {
+            return user;
+        }
+    }
+
+    @Override
+    public User getByUsernameAndPassword(String username, String password) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user = iUserDao.getUser(user);
+        if (user == null || !user.getPassword().equals(password)) {
+            return null;
+        } else {
+            return user;
+        }
     }
 
     @Override
     public Long count(Map param) {
-        String hql = "select count(*) from User where 1=1 ";
-        List paramList = new ArrayList();
-        Iterator iter = param.keySet().iterator();
+        StringBuilder hql = new StringBuilder("select count(*) from User where 1=1 ");
+        List<Object> paramList = new ArrayList<>();
 
-        while (iter.hasNext()) {
-            String key = (String) iter.next();
+        for (Object keyItem : param.keySet()) {
+            String key = (String) keyItem;
             String value = (String) param.get(key);
-            System.out.println("&&&&&value&&&&:" + value);
             if (!"".equals(value)) {
-                hql += "and " + key + "=? ";
+                hql.append("and ").append(key).append("=? ");
                 paramList.add(value);
             }
         }
-        return iUserDao.countUser(hql, paramList);
+        return iUserDao.countUser(hql.toString(), paramList);
     }
 }

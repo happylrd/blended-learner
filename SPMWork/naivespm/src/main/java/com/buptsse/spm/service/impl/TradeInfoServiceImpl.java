@@ -18,25 +18,8 @@ public class TradeInfoServiceImpl implements ITradeInfoService {
     private ITradeInfoDao iTradeInfoDao;
 
     @Override
-    public TradeInfo findTradeInfoById(String id) {
-        return iTradeInfoDao.getTradeInfoById(new Integer(id));
-    }
-
-    @Override
-    public boolean insertTradeInfo(TradeInfo tradeInfo) {
+    public boolean saveTradeInfo(TradeInfo tradeInfo) {
         return iTradeInfoDao.saveTradeInfo(tradeInfo);
-    }
-
-    @Override
-    public List<TradeInfo> findAllTradeInfo() {
-        String hql = "from TradeInfo";
-        List<Object> list = new ArrayList<>();
-        return iTradeInfoDao.listTradeInfo(hql, list);
-    }
-
-    @Override
-    public boolean deleteTradeInfo(String id) {
-        return false;
     }
 
     @Override
@@ -44,11 +27,15 @@ public class TradeInfoServiceImpl implements ITradeInfoService {
         return false;
     }
 
-    public ITradeInfoDao getiTradeInfoDao() {
-        return iTradeInfoDao;
+    @Override
+    public List<TradeInfo> listTradeInfo() {
+        String hql = "from TradeInfo";
+        List<Object> list = new ArrayList<>();
+        return iTradeInfoDao.listTradeInfo(hql, list);
     }
 
-    public void setiTradeInfoDao(ITradeInfoDao iTradeInfoDao) {
-        this.iTradeInfoDao = iTradeInfoDao;
+    @Override
+    public TradeInfo getTradeInfoById(String id) {
+        return iTradeInfoDao.getTradeInfoById(new Integer(id));
     }
 }
