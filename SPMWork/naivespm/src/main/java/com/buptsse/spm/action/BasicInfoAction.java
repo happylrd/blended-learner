@@ -163,12 +163,4 @@ public class BasicInfoAction extends ActionSupport {
     public void setBasicInfo(BasicInfo basicInfo) {
         this.basicInfo = basicInfo;
     }
-
-    public IBasicInfoService getiBasicInfoService() {
-        return iBasicInfoService;
-    }
-
-    public void setiBasicInfoService(IBasicInfoService iBasicInfoService) {
-        this.iBasicInfoService = iBasicInfoService;
-    }
 }

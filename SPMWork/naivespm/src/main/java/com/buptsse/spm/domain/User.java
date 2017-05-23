@@ -8,10 +8,11 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     @Id
+    @GeneratedValue
     @Column(name = "id", nullable = false, length = 15)
-    private String id;
+    private int id;
 
-    @Column(name = "userName", nullable = false, length = 45)
+    @Column(name = "userName", unique = true, nullable = false, length = 45)
     private String username;
 
     @Column(name = "password", nullable = false, length = 45)
@@ -28,11 +29,11 @@ public class User implements Serializable {
     @Column(name = "videoTime")
     private int videoTime;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

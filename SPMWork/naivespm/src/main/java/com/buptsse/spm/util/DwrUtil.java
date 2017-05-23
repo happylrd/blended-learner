@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.struts2.ServletActionContext;
 import com.buptsse.spm.service.IUserService;
 
 public class DwrUtil {
@@ -23,30 +22,12 @@ public class DwrUtil {
         return isNum.matches();
     }
 
-    /**
-     * @param userName  用户名
-     * @param passwWord 密码
-     * @return String 状态消息，但是并没有什么用！
-     */
     public String loginCheck(String userName, String passwWord) {
-        //需要修改
-        System.out.println("此处写用户名密码校验的方法，通过返回1，失败返回失败信息");
-        System.out.println("userName: " + userName + ", passWord: " + passwWord);
-
         if (StringUtils.isBlank(userName) || StringUtils.isBlank(passwWord)) {
-            //ServletActionContext.getRequest().setAttribute("loginMsg", "账号或密码未输入！");
             return "账号或密码未输入！";
         }
-        try {
-            if (userService.getByUsernameAndPassword(userName, passwWord) == null) {
-                //ServletActionContext.getRequest().setAttribute("loginMsg", "对不起，该用户不存在或密码输入错误！");
-                return "对不起，该用户不存在或密码输入错误！";
-            } else {
-                //ServletActionContext.getRequest().setAttribute("loginMsg", "登入成功！");
-                return "1";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (userService.getByUsernameAndPassword(userName, passwWord) == null) {
+            return "对不起，该用户不存在或密码输入错误！";
         }
 
         return "1";
@@ -57,50 +38,39 @@ public class DwrUtil {
      * @return String 检测用户名输入是否有效：10位数字，返回相应字符串
      */
     public String extenceCheck(String userName) {
-        System.out.println("开始检验用户名是否存在");
-        try {
-            if (StringUtils.isBlank(userName)) {
-                System.out.println("用户名不可为空，应为10位");
-                return "用户名不可为空";
-            } else if (!isNumeric(userName) || userName.length() != 10) {
-                System.out.println("用户名应为10位学号");
-                return "用户名应为10位数字";
+        if (StringUtils.isBlank(userName)) {
+            return "用户名不可为空";
+        } else if (!isNumeric(userName) || userName.length() != 10) {
+            return "用户名应为10位数字";
+        } else {
+            if (userService.getByUsername(userName) != null) {
+                System.out.println("用户已存在，请重新输入");
+
+                // 这tm原来是exist...
+
+                return "extence";
             } else {
-                if (userService.getByUsername(userName) != null) {
-                    System.out.println("用户已存在，请重新输入");
-                    return "extence";
-                } else {
-                    System.out.println("用户不存在");
-                    return "unExtence";
-                }
+                // 满足可以注册的条件
+                return "unExtence";
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        return "success";
+//        return "success";
     }
 
-    public String registerCheck(String registerUserName, String registerPassWord, String registerPassWord1) {
+    public String registerCheck(String username, String password,
+                                String passwordAgain) {
 
-        if (StringUtils.isBlank(registerUserName) || StringUtils.isBlank(registerPassWord) || StringUtils.isBlank(registerPassWord1)) {
-            System.out.println("用户名或密码为空！");
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)
+                || StringUtils.isBlank(passwordAgain)) {
             return "error";
-        } else if (!isNumeric(registerUserName) || registerUserName.length() != 10) {
+        } else if (!isNumeric(username) || username.length() != 10) {
             return "error";
         } else {
-            try {
-                if (registerPassWord.equals(registerPassWord1)) {
-                    System.out.println("两次密码输入相同");
-                    return "success";
-                } else {
-                    System.out.println("两次输入的密码不一致，请重新输入！");
-                    return "error";
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (password.equals(passwordAgain)) {
+                return "success";
+            } else {
+                return "error";
             }
         }
-        return "error";
     }
 }

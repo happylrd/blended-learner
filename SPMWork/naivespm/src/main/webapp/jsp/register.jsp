@@ -1,305 +1,176 @@
-<%@ page language="java" import="java.util.*" contentType="text/html;  charset=utf-8" pageEncoding="utf-8"%>
-<%@ include file="/common/taglibs.jsp"%>
-<%--   
-//----------------------------------------------------------------
- //Project: SPM System (Client SubSystem) 
-// JSP Name  : register.jsp 
-// PURPOSE : 登入与注册界面的处理
-// HISTORY：
-//	Create：
-//	Modify：Xue yifei    2015.10.27
-//  Copyright  : BUPTSSE   
-//----------------------------------------------------------------- 
---%>
+<%@ page language="java" import="java.util.*" contentType="text/html;  charset=utf-8" pageEncoding="utf-8" %>
+<%@ include file="/common/taglibs.jsp" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<title>"教育部-IBM精品课程建设项目”软件项目管理课程</title>
-		<!-- 		插入外部样式表，使用DwrUtil -->
-		<script type="text/javascript" src="./dwr/util.js"></script>
-		<script type="text/javascript" src="./dwr/engine.js"></script>
-		<script type="text/javascript" src="./dwr/interface/dwrUtil.js"></script>
-		<script type="text/javascript">
-		function register(){
-/*			var registerUserName = document.getElementById("user");
-			var registerPassWord = document.getElementById("passwd");
-			var registerPassWord1 = document.getElementById("passwd2");
-			dwrUtil.registerCheck(registerUserName.value,registerPassWord.value,registerPassWord1.value,callback);
-			function callback(result){
-				if(result == "success"){
-					//$.messager.alert("提示信息","注册成功！");
-					$("#msg").html("注册成功！");
-				}else{
-					$("#msg").html("注册失败，请重新注册！");
-					//$.messager.alert("注册失败，请重新注册！");
-				}
-			}*/
-			
-            $('#registFm').form('submit',{
-                url: "${ctx}/registerAction.do",
-                success: function(result){
-					$("#msgRegist").html(result);
-					$('#registFm').form('clear');
-                }
-            });			
-			
-			
-		}
-		
-		
-		function login(){
-			var loginUserName = document.getElementById("u");
-			var loginPassWord = document.getElementById("p");
-// 			alert("开始调用dwr进行登录校验");
-			/* 下面一行实际上是没有意义的 */
-			dwrUtil.loginCheck(loginUserName.value,loginPassWord.value,callback);
-			function callback(result){
-				if(result == "1"){
-					//alert("登入成功！");
-					document.getElementById("loginForm").submit();
-				}else{
-					//alert("登入s！");
-					$("#msg").html("用户名或密码错误，请重新输入！");
-				}
-			}
-		}
-		
-		function loginExistenceCheck(){
-			var loginUserName = document.getElementById("u");
-			dwrUtil.extenceCheck(loginUserName.value,callback);
-			function callback(result){
-				if(result == "extence"){
-					document.getElementById('UserNameMsg').style.display="none";
-				}else{
-					var msg = document.getElementById("labelUserNameMsg");
-					if(result == "unExtence"){
-						msg.innerHTML = "用户名不存在";
-					}else {
-						msg.innerHTML = result;
-					}
-					document.getElementById('UserNameMsg').style.display="block";
-				}
-			}
-		}
-		
-		function registerExtenceCheck(){
-			var loginUserName = document.getElementById("user");
-			dwrUtil.extenceCheck(loginUserName.value,callback);
-			function callback(result){
-				if(result == "unExtence"){
-					document.getElementById('RegisterNameMsg').style.display="none";
-				}else{
-					var msg = document.getElementById("labelUserNameMsg1");
-					if(result == "extence"){
-						msg.innerHTML = "用户名已存在";
-					}else {
-						msg.innerHTML = result;
-					}
-					document.getElementById('RegisterNameMsg').style.display="block";
-				}
-			}
-		}
-		
-		function registerPassWordCheck(){
-			var password = document.getElementById("passwd");
-			var length = password.value.length;
-			var passwordMsg = document.getElementById("PasswordMsg");
-			if(length < 6 || length > 16){
-				passwordMsg.style.display = "block";
-			}else{
-				passwordMsg.style.display = "none";
-			}
-		}
-		
-		function registerPassWordCheck2(){
-			var password1 = document.getElementById("passwd").value;
-			var password2 = document.getElementById("passwd2").value;
-			var passwordMsg1 = document.getElementById("PasswordMsg1");
-			if(password1 != password2){
-				passwordMsg1.style.display="block";
-			}else{
-				passwordMsg1.style.display="none";
-			}
-		}
-			
-		</script>
-		<link href="./css/login2.css" rel="stylesheet" type="text/css" />
-	</head>
-	<body>
-		<h1>
-			北邮爱课堂系统
-			<sup>
-				V2015
-			</sup>
-		</h1>
-<!-- background: #fff url(../images/1.jpg) 100% 0 no-repeat;-->
-		
-		<div class="login" style="margin-top: 50px;">
+<head>
+    <title>"教育部-IBM精品课程建设项目”软件项目管理课程</title>
 
-			<div class="header">
-				<div class="switch" id="switch">
-					<a class="switch_btn_focus" id="switch_qlogin"
-						href="javascript:void(0);" tabindex="7">快速登录</a>
-					<a class="switch_btn" id="switch_login" href="javascript:void(0);"
-						tabindex="8">快速注册</a>
-					<div class="switch_bottom" id="switch_bottom"
-						style="position: absolute; width: 64px; left: 0px;"></div>
-				</div>
-			</div>
-			<div class="web_qr_login" id="web_qr_login"
-				style="display: block; height: 235px;">
-				<form id="loginForm" name="loginForm" action="${pageContext.request.contextPath}/loginAction.do" method="post" >
-					<!--登录-->
-					<div class="web_login">
-						<div class="login-box">
-							<div class="login_form">
-								<input type="hidden" name="to" value="log" />
-								<div class="uinArea" id="uinArea">
-									<label class="input-tips" for="u">
-										帐号：
-									</label>
-									<div class="inputOuter" id="uArea">
-										<input type="text" id="u" name="user.userName" onBlur="loginExistenceCheck();" 
-											class="easyui-textbox" data-options="iconCls:'icon-man'" style="width:200px;height:38px;" />
-									</div>
-								</div>
-								
-								<div class="UserNameMsg" id="UserNameMsg" style="display:none;color:#F00">
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<label id="labelUserNameMsg" class="text" for="m">
-										用户名应为10位！
-									</label>
-								</div>
-								
-								<div class="pwdArea" id="pwdArea">
-									<label class="input-tips" for="p">
-										密码：
-									</label>
-									<div class="inputOuter" id="pArea">
-										<input type="password" id="p" name="user.password"
-											class="easyui-textbox" data-options="iconCls:'icon-lock'" style="width:200px;height:38px;"  />
-									</div>
-								</div>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
 
-								<div id="msg" align="center" style="color: red;"></div>
-								
-								<table border="0" align="left">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-									<tr>
-										<td>
-											<div style="padding-left: 0px; margin-top: 20px;">
-												<input type="button" onclick="login()" value="立即登录" style="width: 120px;"
-													class="button_blue" />	
-											</div>
-											
-										</td>
-										<td>
-											<div style="padding-left: 20px; margin-top: 20px;">
-												<input type="submit" formaction="${ctx}/jsp/mainFrame.jsp" value="游客登陆"
-													style="width: 120px;" class="button_blue" />
-											</div>
-										</td>
-									</tr>
-								</table>
-							</div>
+    <style>
+        <%-- just for footer --%>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
 
-						</div>
+        main {
+            flex: 1 0 auto;
+        }
+    </style>
 
-					</div>
-					<!--登录end-->
-				</form>
-			</div>
+    <script type="text/javascript">
+        function doLogin() {
+            $('#login_form').submit();
+        }
 
-			<!--注册-->
-			<div class="qlogin" id="qlogin" style="display: none;">
-				<form id="registFm" action="" method="post">
-					<div class="web_login">
-					
-						<ul class="reg_form" id="reg-ul">
-						
-							<li>
-								<label class="input-tips2">
-									用户名：
-								</label>
-								<div class="inputOuter2">
-									<input type="text" id="user" maxlength="10" name="user.userName" onBlur="registerExtenceCheck();" 
-										class="inputstyle2" />
-								</div>
+        function loginCheck() {
+            // TODO: will add check later
+        }
 
-								<br>
-								<br>
-							</li>
+        function doRegister() {
+            $('#register_form').submit();
+        }
+    </script>
+</head>
 
-							<div class="RegisterName" id="RegisterNameMsg" style="display:none;color:#F00">
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<label id="labelUserNameMsg1" class="text" for="m">
-									用户名应为10位！
-								</label>
-							</div>
+<body>
 
-							<li>
-								<label class="input-tips2">
-									密码：
-								</label>
-								<div class="inputOuter2">
-									<input type="password" id="passwd" name="user.password" onBlur="registerPassWordCheck();" 
-										maxlength="16" class="inputstyle2" />
-								</div>
-								<br>
-								<br>
-							</li>
-							
-							<div class="PasswordMsg" id="PasswordMsg" style="display:none;color:#F00">
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<label class="text" for="pm">
-									密码必须为6位以上，16位以下！
-								</label>
-							</div>
-							
-							<li>
-								<label class="input-tips2">
-									确认密码：
-								</label>
-								<div class="inputOuter2">
-								<input type="password" id="passwd2" name="user.password1" onBlur="registerPassWordCheck2();"
-										maxlength="16" class="inputstyle2" />
-								</div>
+<nav>
+    <div class="nav-wrapper light-blue lighten-2">
+        <a href="https://github.com/happylrd/buptsse-workbooks/tree/master/SPMWork" class="brand-logo"><i
+                class="material-icons">cloud</i>软件项目管理</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="http://sse.bupt.edu.cn/">buptsse</a></li>
+        </ul>
+    </div>
+</nav>
 
-								<br>
-								<br>
-							</li>
-							
-							<div class="PasswordMsg" id="PasswordMsg1" style="display:none;color:#F00">
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<label class="text" for="pm" id="twiceCheck">
-									两次输入密码不一致，请重新输入！
-								</label>
-							</div>
-							<div id="msgRegist" align="center" style="color: red;"></div>
-							<li>
-								<div class="inputArea">
-<!-- 								<input type="submit" -->
-<!-- 									style="margin-top: 10px; margin-left: 85px;" -->
-<!-- 									class="button_blue" value="同意协议并注册" onclick="register()" /> -->
-<!-- 								</div> -->
-									<input type="button"
-									style="margin-top: 10px; margin-left: 85px;"
-									class="button_blue" value="同意协议并注册" onclick="register();" />
-								</div>
-							</li>
-						</ul>
+<main style="margin-top: 30px">
+    <div class="container">
 
-					</div>
-				</form>
-			</div>
-			<!--注册end-->
-		
+        <div class="row">
+            <div class="col s6 offset-s3">
+                <ul class="tabs tabs-fixed-width">
+                    <li class="tab col s3"><a class="active" href="#login_tab">登录</a></li>
+                    <li class="tab col s3"><a href="#register_tab">注册</a></li>
+                </ul>
+            </div>
+        </div>
 
-		
-		
-		</div>
-		<div class="jianyi">
-			版权所有&nbsp;&nbsp;北京邮电大学&nbsp;&nbsp;地址：北京市西土城路10号&nbsp;&nbsp;邮编：100876
-		</div>
-		
-	</body>
+        <div class="row" id="login_tab">
+            <div class="col s6 offset-s3">
+                <div class="center-align">
+                    <div class="card-panel white">
+                        <div class="row">
+
+                            <form class="col s12" action="login.do" method="post" id="login_form">
+
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">account_circle</i>
+
+                                        <input id="login_username" type="text" class="validate" pattern="^\d{10}$"
+                                               name="username">
+                                        <label for="login_username" data-error="用户名必须为10位数字"
+                                               data-success="right">用户名</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">lock</i>
+                                        <input id="login_password" type="password" class="validate"
+                                               pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,30}$"
+                                               name="password">
+                                        <label for="login_password" data-error="密码不少于6位，不多于30位，只能包含并同时包含字母和数字"
+                                               data-success="right">密码</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s12">
+                                        <a class="waves-effect waves-light btn" onclick="doLogin()">
+                                            <i class="material-icons right">send</i>登录
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="register_tab">
+            <div class="col s6 offset-s3">
+                <div class="center-align">
+                    <div class="card-panel white">
+                        <div class="row">
+
+                            <form class="col s12" action="register.do" method="post" id="register_form">
+
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">account_circle</i>
+
+                                        <input id="register_username" type="text" class="validate" pattern="^\d{10}$"
+                                               name="username">
+                                        <label for="register_username" data-error="用户名必须为10位数字"
+                                               data-success="right">用户名</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">lock</i>
+                                        <input id="register_password" type="password" class="validate"
+                                               pattern="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,30}$"
+                                               name="password">
+                                        <label for="register_password" data-error="密码不少于6位，不多于30位，只能包含并同时包含字母和数字"
+                                               data-success="right">密码</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">lock</i>
+                                        <input id="register_password_again" type="password" class="validate"
+                                               name="password1">
+                                        <label for="register_password_again">再次输入密码</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12">
+                                        <a class="waves-effect waves-light btn" onclick="doRegister()">
+                                            <i class="material-icons right">send</i>注册
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="page-footer light-blue lighten-2">
+    <div class="footer-copyright">
+        <div class="container">
+            © 2017 Copyright BUPTSSE-SPM
+            <a class="grey-text text-lighten-4 right" href="#">更多链接</a>
+        </div>
+    </div>
+</footer>
+
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+</body>
 </html>

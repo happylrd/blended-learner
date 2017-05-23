@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
+import com.buptsse.spm.common.Const;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import com.buptsse.spm.dao.IUserDao;
 import com.buptsse.spm.domain.User;
@@ -17,6 +19,53 @@ public class UserServiceImpl implements IUserService {
 
     @Resource
     private IUserDao iUserDao;
+
+    @Override
+    public boolean login(String username, String password) {
+        long resultCount = iUserDao.checkUsername(username);
+        if (resultCount == 0){
+            // case: user doesn't exist
+            return false;
+        }
+
+        // TODO: will add MD5 later
+
+        User user = iUserDao.getByUsernameAndPassword(username, password);
+        if (user == null){
+            // case: password error
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean register(User user) {
+        boolean isValid = this.checkValid(user.getUsername(), Const.USERNAME);
+        if (!isValid) {
+            return false;
+        }
+
+        // TODO: will add MD5 later
+
+        return iUserDao.saveUser(user);
+    }
+
+    private boolean checkValid(String str, String type) {
+        if (StringUtils.isNotBlank(type)) {
+            if (Const.USERNAME.equals(type)) {
+                long resultCount = iUserDao.checkUsername(str);
+                if (resultCount > 0) {
+                    // case: 用户名已存在
+                    return false;
+                }
+            }
+        } else {
+            // case: 参数错误
+            return false;
+        }
+
+        return true;
+    }
 
     @Override
     public boolean saveUser(User user) {
@@ -55,7 +104,6 @@ public class UserServiceImpl implements IUserService {
     public User getByUsername(String username) {
         User user = new User();
         user.setUsername(username);
-        user.setId(username);
         user = iUserDao.getUser(user);
         if (user == null) {
             return null;
