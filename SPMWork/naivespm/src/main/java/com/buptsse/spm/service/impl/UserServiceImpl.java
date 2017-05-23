@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import com.buptsse.spm.common.Const;
+import com.buptsse.spm.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import com.buptsse.spm.dao.IUserDao;
@@ -28,9 +29,9 @@ public class UserServiceImpl implements IUserService {
             return false;
         }
 
-        // TODO: will add MD5 later
+        String md5Password = MD5Util.MD5EncodeUtf8(password);
 
-        User user = iUserDao.getByUsernameAndPassword(username, password);
+        User user = iUserDao.getByUsernameAndPassword(username, md5Password);
         if (user == null){
             // case: password error
             return false;
@@ -45,7 +46,8 @@ public class UserServiceImpl implements IUserService {
             return false;
         }
 
-        // TODO: will add MD5 later
+        // MD5加密
+        user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
 
         return iUserDao.saveUser(user);
     }
