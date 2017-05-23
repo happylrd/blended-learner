@@ -59,6 +59,10 @@
 
 规范`service`层代码
 
+`action`改进
+
+预计移除 `dwr`，前端校验全部交给js处理，后端交给相应的validator处理。
+
 
 ## 数据库设计（original, ugly）
 
