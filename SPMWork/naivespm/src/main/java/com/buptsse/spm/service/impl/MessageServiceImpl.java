@@ -1,6 +1,5 @@
 package com.buptsse.spm.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
@@ -23,20 +22,7 @@ public class MessageServiceImpl implements IMessageService {
     }
 
     @Override
-    public boolean removeMessage(Integer id) {
-        Message message = iMessageDao.getMessageById(id);
-        return iMessageDao.removeMessage(message);
-    }
-
-    @Override
-    public boolean saveOrUpdate(Message message) {
-        return false;
-    }
-
-    @Override
     public List<Message> listMessage() {
-        String hql = "from Message";
-        List<Object> list = new ArrayList<>();
-        return iMessageDao.listMessage(hql, list);
+        return iMessageDao.listMessage();
     }
 }

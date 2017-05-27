@@ -37,6 +37,19 @@
             <result name="error">jsp/register.jsp</result>
         </action>
 
+
+        <!-- 发表留言 -->
+        <action name="publishMessage" method="publishMessage" class="com.buptsse.spm.action.MessageAction">
+            <result name="success">jsp/message/mainMessage.jsp</result>
+            <!--<result name="error">error/error.jsp</result>-->
+        </action>
+
+        <!-- 获取留言板列表 -->
+        <action name="listMessage" method="listMessage" class="com.buptsse.spm.action.MessageAction">
+            <result name="success">jsp/message/showMessage.jsp</result>
+            <!--<result name="error">error/error.jsp</result>-->
+        </action>
+
         <!-- 查询user列表 -->
         <action name="listUser" method="listUser" class="RegisterAction">
             <result name="success"></result>
@@ -83,26 +96,6 @@
             <result name="success"></result>
             <result name="error">error/error.jsp</result>
         </action>
-
-
-        <!-- 留言板 -->
-        <action name="findMessageList" method="findMessageList" class="messageAction">
-            <result name="success">/jsp/message/showMessage.jsp</result>
-            <result name="error">error/error.jsp</result>
-        </action>
-
-        <!-- 保存留言 -->
-        <action name="saveMessage" method="insertMessage" class="messageAction">
-            <result name="success">/jsp/message/showMessage.jsp</result>
-            <result name="error">error/error.jsp</result>
-        </action>
-
-        <!-- 保存留言 -->
-        <action name="deleteMessage" method="deleteMessage" class="messageAction">
-            <result name="success"></result>
-            <result name="error">error/error.jsp</result>
-        </action>
-
 
         <!-- 网上测试 -->
         <action name="listExam" method="findExamList" class="examAction">

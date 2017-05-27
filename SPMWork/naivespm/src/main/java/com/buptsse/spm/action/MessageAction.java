@@ -1,140 +1,50 @@
 package com.buptsse.spm.action;
 
-import java.io.IOException;
+import com.buptsse.spm.domain.Message;
+import com.buptsse.spm.service.IMessageService;
+import com.opensymphony.xwork2.ModelDriven;
+
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
-
-import org.apache.struts2.ServletActionContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
-import com.alibaba.fastjson.JSONObject;
-import com.buptsse.spm.domain.Message;
-import com.buptsse.spm.service.IMessageService;
-import com.buptsse.spm.service.ISelectCourseService;
-
-import com.opensymphony.xwork2.ActionSupport;
-
-
 /**
- * @author BUPT-TC
- * @date 2015年11月25日 下午4:17
- * @description 实现留言板相关功能
- * @modify BUPT-TC
- * @modifyDate 
+ * Message Board Action
  */
-public class MessageAction extends ActionSupport{
+public class MessageAction extends BaseAction implements ModelDriven<Message> {
 
-	private static final long serialVersionUID = 1L;
-	private static Logger LOG = LoggerFactory.getLogger(MessageAction.class);
-	@Resource
-	private IMessageService messageService;
-	
-	public List messageList = new ArrayList();
-	
-	public Message message;
+    @Resource
+    private IMessageService messageService;
 
+    private Message message = new Message();
 
+    private List<Message> messageList = new ArrayList<>();
 
-	/**
-	 * 查询所有的留言内容
-	 * @return
-	 * @throws Exception
-	 */
-	public String findMessageList() throws Exception{
-		
-		messageList = messageService.listMessage();
-		
-		return "success";
-	}	
-	
-	/**
-	 * 增加留言方法
-	 * @return
-	 * @throws Exception
-	 */
-	public String insertMessage() throws Exception{
-		String msg = "";
-		boolean flag = messageService.saveMessage(message);
-		if(flag){
-			msg = "1";//表示保存成功
-		}else{
-			msg = "2";//表示保存失败
-		}
-		
-		try {
-			ServletActionContext.getResponse().getWriter().write(msg);
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-		
-		return null;
-	}		
-	
+    @Override
+    public Message getModel() {
+        return message;
+    }
 
-	/**
-	 * 删除留言方法
-	 * @return
-	 * @throws Exception
-	 */
-	public String deleteMessage() throws Exception{
-		String msg = "";
-		
-		boolean flag = messageService.removeMessage(message.getId());
-		
-		if(flag){
-			msg = "删除成功";//表示保存成功
-		}else{
-			msg = "删除失败，请联系管理员！";//表示保存失败
-		}
-		String str=JSONObject.toJSONString(msg);
-		try {
-			ServletActionContext.getResponse().getWriter().write(str);
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-		
-		return null;
-	}	
-	
+    public String publishMessage() {
+        if (messageService.saveMessage(message)) {
+            return SUCCESS;
+        }
+        return ERROR;
+    }
 
+    public String listMessage() {
+        messageList = messageService.listMessage();
+        if (messageList.size() > 0) {
+            return SUCCESS;
+        }
+        return ERROR;
+    }
 
-	
-	
-	public IMessageService getMessageService() {
-		return messageService;
-	}
+    public List<Message> getMessageList() {
+        return messageList;
+    }
 
-
-	public void setMessageService(IMessageService messageService) {
-		this.messageService = messageService;
-	}
-
-
-
-	public List getMessageList() {
-		return messageList;
-	}
-
-
-	public void setMessageList(List messageList) {
-		this.messageList = messageList;
-	}
-
-
-	public Message getMessage() {
-		return message;
-	}
-
-	public void setMessage(Message message) {
-		this.message = message;
-	}
-		
+    public void setMessageList(List<Message> messageList) {
+        this.messageList = messageList;
+    }
 }
