@@ -42,6 +42,10 @@
             }
         }
 
+        function doVisit() {
+            window.location.href = "${ctx}/jsp/mainFrame.jsp";
+        }
+
         function loginCheck() {
             var username = $('#login_username').val();
             var password = $('#login_password').val();
@@ -117,10 +121,13 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col s12">
+                                    <div class="col s6">
                                         <a class="waves-effect waves-light btn" onclick="doLogin()">
                                             <i class="material-icons right">send</i>登录
                                         </a>
+                                    </div>
+                                    <div class="col s6">
+                                        <a class="waves-effect waves-light btn" onclick="doVisit()">游客访问</a>
                                     </div>
                                 </div>
                             </form>
@@ -162,8 +169,16 @@
                                     <div class="input-field col s12">
                                         <i class="material-icons prefix">lock</i>
                                         <input id="register_password_again" type="password" class="validate"
-                                               name="password1">
+                                               name="passwordAgain">
                                         <label for="register_password_again">再次输入密码</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">email</i>
+                                        <input id="register_email" type="email" class="validate"
+                                               name="email">
+                                        <label for="register_email">邮箱</label>
                                     </div>
                                 </div>
                                 <div class="row">

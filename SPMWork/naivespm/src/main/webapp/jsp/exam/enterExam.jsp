@@ -54,7 +54,7 @@
 			${exam.answerD }
 			<br />
 			
-			<c:if test="${session.user.position=='2' }">
+			<c:if test="${session.currentUser.position=='2' }">
 				<td><a href="javaScript:delQuestion('${exam.examName}','${exam.number}')">删除</a></td>
 			</c:if>	
 						

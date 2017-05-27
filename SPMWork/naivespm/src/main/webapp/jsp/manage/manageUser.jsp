@@ -140,7 +140,7 @@
             data-options="fit:false,border:false,pageSize:10,pageList:[10,15,20]" >
         <thead>
             <tr >
-            	<c:if test="${session.user.position=='1' }">
+            	<c:if test="${session.currentUser.position=='1' }">
             		<th data-options="checkbox:true" field=""  ></th>
             	</c:if>
                 <th data-options="field:'id'" width="15%">编号</th>
@@ -148,14 +148,14 @@
                 <th data-options="field:'userName'"  width="20%" >用户名</th>
                 <th data-options="field:'password'" width="20%">密码</th>
                 <th data-options="field:'position'"  width="15%">身份 </th>
-                <c:if test="${session.user.position=='1' }">
+                <c:if test="${session.currentUser.position=='1' }">
                 	<th data-options="field:'_operate' ,formatter:formatOper" width="5%">操作</th>
                 </c:if>
             </tr>
         </thead>
     </table>  
         <div id="toolbar">
-        <c:if test="${session.user.position!='3' }">
+        <c:if test="${session.currentUser.position!='3' }">
 	        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-no" plain="true" onclick="deleteUser(1)">批量删除</a>
     	</c:if>
     	</div>

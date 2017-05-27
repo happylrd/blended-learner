@@ -25,7 +25,7 @@ charset=utf-8" pageEncoding="utf-8"%>
 			<h1>
 				知识点索引
 			</h1>
-			<c:if test="${session.user.position=='1'}">
+			<c:if test="${session.currentUser.position=='1'}">
 				<form action="editBasicInfo.do?name=zhishidiansuoyin" method="post">
 					<input type="submit" class="btn btn-default" value="内容修改">
 				</form>

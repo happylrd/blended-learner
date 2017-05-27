@@ -61,23 +61,6 @@ public class UserDaoImpl extends BaseDAOImpl<User> implements IUserDao {
     }
 
     @Override
-    public boolean removeUser(User user) {
-        try {
-            super.remove(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e);
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public List<User> listUserByPage(String hql, List<Object> param, Integer pageNum, Integer pageSize) {
-        return super.list(hql, param, pageNum, pageSize);
-    }
-
-    @Override
     public User getUser(User user) {
         // TODO: will be modified with hql
         List<User> userList = super.list("from User");
@@ -87,11 +70,6 @@ public class UserDaoImpl extends BaseDAOImpl<User> implements IUserDao {
             }
         }
         return null;
-    }
-
-    @Override
-    public User getUserById(String id) {
-        return super.get(User.class, id);
     }
 
     @Override

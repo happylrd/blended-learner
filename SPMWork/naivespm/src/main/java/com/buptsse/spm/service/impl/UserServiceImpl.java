@@ -24,7 +24,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean login(String username, String password) {
         long resultCount = iUserDao.checkUsername(username);
-        if (resultCount == 0){
+        if (resultCount == 0) {
             // case: user doesn't exist
             return false;
         }
@@ -32,7 +32,7 @@ public class UserServiceImpl implements IUserService {
         String md5Password = MD5Util.MD5EncodeUtf8(password);
 
         User user = iUserDao.getByUsernameAndPassword(username, md5Password);
-        if (user == null){
+        if (user == null) {
             // case: password error
             return false;
         }
@@ -70,36 +70,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public boolean saveUser(User user) {
-        return iUserDao.saveUser(user);
-    }
-
-    @Override
     public boolean updateUser(User user) {
         return iUserDao.updateUser(user);
-    }
-
-    @Override
-    public boolean removeUser(String id) {
-        User user = iUserDao.getUserById(id);
-        return iUserDao.removeUser(user);
-    }
-
-    @Override
-    public List<User> listUserByPage(Map param, Integer pageNum, Integer pageSize) {
-        StringBuilder hql = new StringBuilder("from User where 1=1 ");
-        List<Object> paramList = new ArrayList<>();
-
-        for (Object keyItem : param.keySet()) {
-            String key = (String) keyItem;
-            String value = (String) param.get(key);
-            if (!"".equals(value)) {
-                hql.append("and ").append(key).append("=? ");
-                paramList.add(value);
-            }
-        }
-
-        return iUserDao.listUserByPage(hql.toString(), paramList, pageNum, pageSize);
     }
 
     @Override

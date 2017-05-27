@@ -156,16 +156,16 @@
   </script>
   
   
- <body onload="initDate('${session.user.userName}','${session.user.position}')">
+ <body onload="initDate('${session.currentUser.username}','${session.currentUser.position}')">
 	<h1 style="font-size: 28px;color: #00a1f1;border-bottom: 1px solid #b6d9e8;line-height: 50px;word-break:break-all;">
 	    选课
    </h1>  
  
  <form id="ff" method="post">  
- <c:if test="${session.user.position=='1' }">
+ <c:if test="${session.currentUser.position=='1' }">
  	您作为管理员，无该功能权限！
  </c:if> 
- <c:if test="${session.user.position=='2' }">
+ <c:if test="${session.currentUser.position=='2' }">
 	 <table style="background:#efefef; border-collapse:collapse ;"   width="100%" height="80" cellspacing="5" cellpadding="5"> 
 	 	<tr>
 		 	<td width="15%" align="right" ><label for="name" >班级:</label> </td>
@@ -201,7 +201,7 @@
  	        <input type="button" class="btn btn-default" style="margin-right:20px;" onclick="clearForm()" value="重  置" />   
 	    </div>
  </c:if>	    
- 			<c:if test="${session.user.position=='3' }">
+ 			<c:if test="${session.currentUser.position=='3' }">
 				<input type="button" id="selectButton" class="btn btn-default" style="margin-right:20px;" onclick="selectCourse()" value="我要选课" /> 
 			</c:if>	  
 </form> 
@@ -216,7 +216,7 @@
             data-options="fit:false,border:false,pageSize:10,pageList:[10,15,20]" >
         <thead>
             <tr >
-            	<c:if test="${session.user.position!='3' }">
+            	<c:if test="${session.currentUser.position!='3' }">
             		<th data-options="checkbox:true" field=""  ></th>
             	</c:if>
                 <th data-options="field:'studentId'" width="15%">学号</th>
@@ -224,14 +224,14 @@
                 <th data-options="field:'name'"  width="20%" >姓名</th>
                 <th data-options="field:'classId'" width="20%">班级</th>
                 <th data-options="field:'status'"  width="15%">状态</th>
-                <c:if test="${session.user.position!='3' }">
+                <c:if test="${session.currentUser.position!='3' }">
                 	<th data-options="field:'_operate' ,formatter:formatOper" width="15%">操作</th>
                 </c:if>
             </tr>
         </thead>
     </table>  
         <div id="toolbar">
-        <c:if test="${session.user.position!='3' }">
+        <c:if test="${session.currentUser.position!='3' }">
 	        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" plain="true" onclick="operateStatus(1)">批量确认</a>
 	        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="operateStatus(2)">批量取消</a>
 	        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-no" plain="true" onclick="operateStatus(3)">批量删除</a>
@@ -250,7 +250,7 @@
 				<table border="0">
 					<tr>
 						<td>学号：</td>
-						<td> <input  name="course.studentId" class="easyui-textbox" readonly="readonly" style="height: 30px; width: 200px; " value="${session.user.userName}" /></td>
+						<td> <input  name="course.studentId" class="easyui-textbox" readonly="readonly" style="height: 30px; width: 200px; " value="${session.currentUser.username}" /></td>
 					</tr>
 					<tr>
 						<td>班级：</td>

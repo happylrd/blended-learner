@@ -41,7 +41,7 @@
             <div class="content">
                     ${message.detail}
             </div>
-            <c:if test="${session.user.position=='1' }">
+            <c:if test="${session.currentUser.position=='1' }">
                 <div class="content">
                     <input type="button" class="btn btn-default" style="margin-right:20px;"
                            onclick="removeMessage('${message.id}')" value="删  除"/>

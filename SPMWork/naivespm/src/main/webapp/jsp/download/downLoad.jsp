@@ -52,14 +52,14 @@
 						${downLoadList[status.index].statement}
 					<a class="color" href="${ctx}${downLoadList[status.index].filePath}"/>>点击下载</a>
 					
-					<c:if test="${session.user.position=='2' }">
+					<c:if test="${session.currentUser.position=='2' }">
 						<a class="color" href="deleteDownload.do?id=${downLoadList[status.index].id}">&nbsp;&nbsp;/&nbsp;&nbsp;删除</a>
 					</c:if>
 					
 					</p>
 				</s:iterator>
 				
-				<c:if test="${session.user.position=='2' }">
+				<c:if test="${session.currentUser.position=='2' }">
 					<input type="button" class="btn btn-default" style="margin-right:20px;" onclick="uploadFile()" value="文件上传" />
 		   		</c:if>				
 				

@@ -37,7 +37,7 @@
 	<h1 style="font-size: 28px;color: #00a1f1;border-bottom: 1px solid #b6d9e8;line-height: 50px;word-break:break-all;">
 	   网上测试
    </h1>  
-   <c:if test="${session.user.position=='2' }">
+   <c:if test="${session.currentUser.position=='2' }">
 		<form action="${ctx}/jsp/exam/generateExam.jsp" method="post">
 			<input type="submit" class="btn btn-default" value="新建测试题">
 		</form>	
@@ -50,7 +50,7 @@
 				<table border="0" width="60%">
 					<tr>
 						<td width="50%"><a href="${ctx}/enterExam.do?examName=${exam}">${exam}</a></td>
-						<c:if test="${session.user.position=='2' }">
+						<c:if test="${session.currentUser.position=='2' }">
 							<td><a href="javaScript:delExam('${exam}')">删除</a></td>
 						</c:if>
 					</tr>

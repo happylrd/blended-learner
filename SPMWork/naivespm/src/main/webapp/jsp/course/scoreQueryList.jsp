@@ -305,12 +305,12 @@
   </script>
   
   
-  <body onload="initDate('${session.user.userName}','${session.user.position}')">
+  <body onload="initDate('${session.currentUser.username}','${session.currentUser.position}')">
 
 	<h1 style="font-size: 28px;color: #00a1f1;border-bottom: 1px solid #b6d9e8;line-height: 50px;word-break:break-all;">
 	    成绩查询
    </h1>  
- <c:if test="${session.user.position=='1' }">
+ <c:if test="${session.currentUser.position=='1' }">
  	您作为管理员，无该功能权限！
  </c:if> 
 
@@ -330,7 +330,7 @@
       <a href="javascript:void(0)"   class="easyui-linkbutton"  iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">关 闭</a>
 </div>  
   
- <c:if test="${session.user.position=='2' }">     
+ <c:if test="${session.currentUser.position=='2' }">
 	 <form id="ff" method="post">   
 	 <table style="background:#efefef; border-collapse:collapse ;"   width="100%"  height="50px" cellspacing="5" cellpadding="5"> 
 	 	<tr>
@@ -348,7 +348,7 @@
 	 	    <div style="text-align:center;padding:5px">
 		    	<input type="button" class="btn btn-default" style="margin-right:20px;" onclick="query()" value="查  询" />
 		    	<input type="button" class="btn btn-default" style="margin-right:20px;" onclick="clearForm()" value="重 置" />
-				<c:if test="${session.user.position!='3' }">
+				<c:if test="${session.currentUser.position!='3' }">
 					<input type="button" class="btn btn-default" style="margin-right:20px;" onclick="uploadScore()" value="成绩上传" />
 		   		</c:if>
 		    </div>
@@ -362,7 +362,7 @@
             data-options="fit:false,border:false,pageSize:10,pageList:[10,15,20,500]" >
         <thead>
             <tr>
-            	<c:if test="${session.user.position!='3' }">
+            	<c:if test="${session.currentUser.position!='3' }">
                 	<th data-options="checkbox:true" field=""  ></th>
                 </c:if>
                 <th data-options="field:'studentId'" width="10%">学号</th>
@@ -380,7 +380,7 @@
         
     </table>  
         <div id="toolbar">
-        <c:if test="${session.user.position!='3' }">
+        <c:if test="${session.currentUser.position!='3' }">
 	        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-redo" plain="true" onclick="sendEmail(1)">群发邮件通知成绩</a>
     	</c:if>
     	</div>
@@ -388,7 +388,7 @@
   
    <div id="win"></div> 
    
-  	<c:if test="${session.user.position=='2' }">
+  	<c:if test="${session.currentUser.position=='2' }">
 		<!-- 成绩分析 
 		<input type="button" class="btn btn-default" onclick="showResult()" value="成绩分析">-->
 		<input type="button" class="btn btn-default" name="line" onclick="changeStyle(this)" value="成绩分析">

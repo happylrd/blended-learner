@@ -9,7 +9,7 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "id", nullable = false, length = 15)
+    @Column(name = "id", nullable = false)
     private int id;
 
     @Column(name = "userName", unique = true, nullable = false, length = 45)
@@ -18,7 +18,19 @@ public class User implements Serializable {
     @Column(name = "password", nullable = false, length = 45)
     private String password;
 
-    private String password1;
+    @Column(name = "email", length = 50)
+    private String email;
+
+    @Column(name = "phone", length = 20)
+    private String phone;
+
+    /**
+     * 0 for administrator
+     * 1 for student, default
+     * 2 for teacher
+     */
+    @Column(name = "role", nullable = false)
+    private Integer role = 1;
 
     @Column(name = "position", length = 45)
     private String position;
@@ -53,12 +65,28 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getPassword1() {
-        return password1;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPassword1(String password1) {
-        this.password1 = password1;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
     }
 
     public String getPosition() {

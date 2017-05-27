@@ -181,7 +181,7 @@ body {
 	
 	
 	</head>
-	<div style="margin-left:90%;" ><h3>欢迎您：${session.user.userName }</h3></div>		
+	<div style="margin-left:90%;" ><h3>欢迎您：${session.currentUser.username}</h3></div>
 	<body margin="0" id="top">
 		<div id="menu2" class="menu" style="margin-left:30%;z-index: 99999" >
 			<ul>
@@ -232,7 +232,7 @@ body {
 					<a href="${pageContext.request.contextPath}/logOut.do" target="123">登录入口</a>
 				</li>
 				
-				<c:if test="${session.user.position=='1'}">
+				<c:if test="${session.currentUser.position=='1'}">
 					<li>
 						<!-- <a href="${pageContext.request.contextPath}/jsp/manage/manageUser.jsp"  target="right">人员管理</a> -->
 						 <a href="${pageContext.request.contextPath}/jsp/manage/manageUser.jsp"  target="right">人员管理</a>

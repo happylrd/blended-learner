@@ -84,7 +84,7 @@
 				<p>标题： ${ piece.pieceName}</p>
 				<p>简介： ${ piece.chapterName} &nbsp;&nbsp;
 <a class="color" href="${ctx}${piece.filePath}"/>>点击下载</a> &nbsp;&nbsp;&nbsp;&nbsp;
-					<c:if test="${session.user.position=='2'}">
+					<c:if test="${session.currentUser.position=='2'}">
 						<a class="color" href="javaScript:delTeachingPlan('${piece.id }')">删除</a>
 					</c:if>
 				</p>
@@ -95,7 +95,7 @@
 							
 							<a href="${ctx}${teachingPlan.filePath}">第${teachingPlan.chapterId } 章节: ${ teachingPlan.chapterName}</a>
 							
-							<c:if test="${session.user.position=='2'}">
+							<c:if test="${session.currentUser.position=='2'}">
 								&nbsp;&nbsp;
 								<a class="color" href="javaScript:delTeachingPlan('${teachingPlan.id }')">删除</a>
 							</c:if>
@@ -124,7 +124,7 @@
 			
 			
 			
-			<c:if test="${session.user.position=='2'}">
+			<c:if test="${session.currentUser.position=='2'}">
 	
 				<input type="button" class="btn btn-default" style="margin-right:20px;" onclick="addTeachingPlan()" value="添加教案" />
 				
