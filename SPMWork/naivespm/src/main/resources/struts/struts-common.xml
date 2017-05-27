@@ -26,6 +26,11 @@
             <result name="error">jsp/register.jsp</result>
         </action>
 
+        <!-- 登出 -->
+        <action name="logout" method="logout" class="com.buptsse.spm.action.UserAction">
+            <result name="success">jsp/register.jsp</result>
+        </action>
+
         <!-- 注册 -->
         <action name="register" method="register" class="com.buptsse.spm.action.UserAction">
             <result name="success">jsp/register.jsp</result>
@@ -179,7 +184,7 @@
         </action>
 
         <!-- 基本信息菜单 -->
-        <action name="enterintro" method="enterBasicInfo" class="BasicInfoAction">
+        <action name="enterintro" method="enterBasicInfo" class="com.buptsse.spm.action.BasicInfoAction">
             <!-- 课程简介  -->
             <result name="kechengjianjie">jsp/introduction/courseIntro.jsp</result>
             <!-- 教学大纲  -->

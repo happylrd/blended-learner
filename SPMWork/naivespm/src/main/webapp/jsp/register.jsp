@@ -26,16 +26,38 @@
     </style>
 
     <script type="text/javascript">
-        function doLogin() {
-            $('#login_form').submit();
-        }
 
-        function loginCheck() {
-            // TODO: will add check later
+        var usernameRegExp = /^\d{10}$/;
+        var passwordRegExp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,30}$/;
+
+        function doLogin() {
+            if (loginCheck()) {
+                $('#login_form').submit();
+            }
         }
 
         function doRegister() {
-            $('#register_form').submit();
+            if (registerCheck()) {
+                $('#register_form').submit();
+            }
+        }
+
+        function loginCheck() {
+            var username = $('#login_username').val();
+            var password = $('#login_password').val();
+            return usernameRegExp.test(username) && passwordRegExp.test(password);
+        }
+
+        // TODO: need to add `username` has exist check with backend support
+        function registerCheck() {
+            var username = $('#register_username').val();
+            var password = $('#register_password').val();
+            var passwordAgain = $('#register_password_again').val();
+
+            if (password !== passwordAgain) {
+                return false;
+            }
+            return usernameRegExp.test(username) && passwordRegExp.test(password);
         }
     </script>
 </head>
