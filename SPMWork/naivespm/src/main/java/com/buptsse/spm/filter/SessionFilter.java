@@ -1,6 +1,5 @@
 package com.buptsse.spm.filter;
 
-import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -11,11 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.buptsse.spm.common.Const;
 import com.buptsse.spm.domain.User;
 
-/**
- * session校验
- */
+import java.io.IOException;
+
 public class SessionFilter implements Filter {
 
     @Override
@@ -35,32 +34,23 @@ public class SessionFilter implements Filter {
 
     }
 
-    /**
-     * 校验SESSION是否有效，判断session里面是否有user
-     */
     private void checkSession(HttpServletRequest request, HttpServletResponse response) {
-        // 如果Session失效，跳回登录页面
         HttpSession session = request.getSession();
         try {
+            // case: session失效
             if (session == null) {
-                System.out.println("*****校验到session失效*****");
-
                 // TODO: will be improved later
                 response.sendRedirect("/SPM_Project");
             } else {
-
-                // TODO: will be improved later
-                User user = (User) session.getAttribute("user");
-
+                User user = (User) session.getAttribute(Const.CURRENT_USER);
+                // case: user has not login
                 if (user == null) {
-                    System.out.println("*****校验到用户未登录*****");
-
                     // TODO: will be improved later
                     response.sendRedirect("/SPM_Project/jsp/relogin.jsp");
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
     }
 }

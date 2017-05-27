@@ -70,17 +70,17 @@
 
 
         <!-- 查询课程信息 -->
-        <action name="courseQuery" method="listCourse" class="courseAction">
+        <action name="courseQuery" method="listCourse" class="com.buptsse.spm.action.CourseAction">
             <result name="success"></result>
             <result name="error">jsp/error.jsp</result>
         </action>
         <!-- 修改课程信息 -->
-        <action name="courseUpdate" method="updateCourse" class="courseAction">
+        <action name="courseUpdate" method="updateCourse" class="com.buptsse.spm.action.CourseAction">
             <result name="success"></result>
             <result name="error">jsp/error.jsp</result>
         </action>
         <!-- 插入课程信息 -->
-        <action name="insertCourse" method="insertCourse" class="courseAction">
+        <action name="insertCourse" method="insertCourse" class="com.buptsse.spm.action.CourseAction">
             <result name="success"></result>
             <result name="error">jsp/error.jsp</result>
         </action>
