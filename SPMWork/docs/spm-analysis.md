@@ -1,6 +1,6 @@
 # SPM Analysis
 
-> 在没有文档与注释的情况下接手一个ugly project，并且要在这个基础上进行开发，无奈之下对项目做一些分析。
+> 在没有文档与注释的情况下接手一个extremely ugly project，并且要在这个基础上进行开发，无奈之下对项目做一些分析。
 
 ## Task List
 
@@ -37,6 +37,10 @@
 
 `ConfigInfo`类无相应表，`fileinfo`表无相应类。
 
+`dao, service`问题
+
+到处充斥着为了封装而封装的代码，可以清晰地看出作者对于抽象封装以及dao、service层的极其浅陋的理解。
+
 `domain`改进
 
 编码风格类问题参见[编码风格](./code-style.md)。
@@ -63,8 +67,14 @@
 
 预计移除 `dwr`，前端校验全部交给js处理，后端交给相应的validator处理。
 
+`jsp`改进
+
+这jsp写的已经无可救药了...
+
 
 ## 数据库设计（original, ugly）
+
+> 有空再改吧...
 
 ### BasicInfo(basicinfo)
 
